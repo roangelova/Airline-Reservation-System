@@ -29,6 +29,8 @@ namespace AirlineReservationSystem.Controllers
             return View();
         }
 
+        //TODO: DELETE WHEN DONE
+
         [Authorize(Roles = UserConstants.Role.AdministratorRole)]
         public async Task<IActionResult> ManageUsers() 
         {
@@ -39,12 +41,24 @@ namespace AirlineReservationSystem.Controllers
         
         }
 
+        //TODO: CREATE ROLO
+        //TODO: DELETE WHEN DONE
         public async Task<IActionResult> CreateRole()
         {
+           // await roleManager.CreateAsync(new IdentityRole()
+           // {
+           //     Name = UserConstants.Role.AdministratorRole
+           //});
+
+           // await roleManager.CreateAsync(new IdentityRole()
+           // {
+           //     Name = UserConstants.Role.FleetManagerRole
+           //  }); 
+
             //await roleManager.CreateAsync(new IdentityRole()
             //{
-            //    Name = UserConstants.Role.AdministratorRole
-            //});
+            //    Name = UserConstants.Role.FlightManagerRole
+            //}) ;
 
             return Ok();
         }

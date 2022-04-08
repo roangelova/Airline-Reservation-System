@@ -14,6 +14,7 @@ namespace AirlineReservationSystem.Extensions
             {
                 services.AddScoped<IApplicatioDbRepository, ApplicatioDbRepository>();
                 services.AddScoped<IUserService, UserService>();
+                services.AddScoped<IAircraftService, AircraftService>();
 
                 return services;
             }

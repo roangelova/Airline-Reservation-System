@@ -3,6 +3,16 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome to the admin area!</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-3">Welcome to the admin area!</h1>
+     <h1 class="display-3"> Here you can manage our airline's fleet, routes and flights.</h1>
+     <br/>
+    
+<div>
+    @* TODO:ADD CORRECT LINK TO HOME VIEW ONCE VIEW IS CREATED *@
+<a asp-area="admin" asp-action="Index" asp-controller="user" type="button" class="btn btn-block bg-gradient-secondary btn-lg" style="border:2px solid">User Management</a>
+<a asp-area="admin" asp-action="Home" asp-controller="aircraft" type="button" class="btn btn-block bg-gradient-secondary btn-lg"style="border:2px solid">Fleet Management</a>
+<a asp-area="admin" asp-action="Home" asp-controller="flight" type="button" class="btn btn-block bg-gradient-secondary btn-lg" style="border:2px solid">Flight Management</a>
+</div>
+<br/>
+    <img src="/images/a350.jpg" alt="Aircraft picture" style="width:600px;" />
 </div>

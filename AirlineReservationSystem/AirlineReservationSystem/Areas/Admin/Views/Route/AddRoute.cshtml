@@ -1,0 +1,26 @@
+﻿@using AirlineReservationSystem.Core.Models.AdminArea.Route;
+@model AddRouteVM
+
+<div class="col-md-6">
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title">  Please fill in the required route information.</h3>
+        </div>
+        <form>
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="City">City</label>
+                    <input type="text" class="form-control" name="City" id="cityId" placeholder="Enter city name">
+                </div>
+                <div class="form-group">
+                    <label for="IATA">IATA code</label>
+                    <input type="text" class="form-control" name="IATA" id="IATAId" placeholder="Enter valid IATA code">
+                </div>
+            </div>
+
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary">Add route</button>
+            </div>
+        </form>
+    </div>
+</div>

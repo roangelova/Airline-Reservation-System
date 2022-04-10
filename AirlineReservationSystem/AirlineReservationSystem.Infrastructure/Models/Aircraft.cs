@@ -18,6 +18,10 @@ namespace AirlineReservationSystem.Infrastructure.Models
         public string Model { get; set; }
 
         [Required]
+        [StringLength(ImageUrlMaxLength)]
+        public string ImageUrl { get; set; }
+
+        [Required]
         [Range(MinAircraftCapacity, MaxAircraftCapacity)]
         public int Capacity { get; set; }
 

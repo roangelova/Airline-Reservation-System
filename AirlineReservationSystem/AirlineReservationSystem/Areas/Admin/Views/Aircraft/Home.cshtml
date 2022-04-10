@@ -19,10 +19,11 @@
 <br/>
 @foreach (var aircraft in Model)
 {
-<div class="aircraft-board">
+<div class="aircraft-board section">
                     <h2 style="font-size:18px" class="AircraftManufacturer">Manufacturer: @aircraft.Manufacturer</h2>
                     <h2 style="font-size:18px" class="aircraftModel">Aircraft Model: @aircraft.AircraftModel</h2>
                     <h2 style="font-size:18px" class="aircraftCapacity">Capacity: @aircraft.Capacity</h2>
+                    <img class="aircraft-picture" src=@aircraft.ImageUrl><img>
  </div>
 }
 </section>

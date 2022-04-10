@@ -15,5 +15,8 @@ namespace AirlineReservationSystem.Core.Models.AdminArea.Aircraft
         [Required]
         [Display(Name = "Aircraft Capacity")]
         public string Capacity { get; set; }
+
+        [Display(Name = "Aircraft image url")]
+        public string ImageUrl { get; set; }
     }
 }

@@ -7,6 +7,8 @@
 
         public const int GeneralMaxLength = 100;
 
+        public const int ImageUrlMaxLength = 300;
+
         public const int IATACodeMaxLength = 3;
 
         public const int BookingMinPassengers = 1;

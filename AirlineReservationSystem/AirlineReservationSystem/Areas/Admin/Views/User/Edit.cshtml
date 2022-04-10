@@ -1,5 +1,5 @@
 ﻿@using AirlineReservationSystem.Core.Models.Users;
-@model UserEditVM
+@model UserEditVM;
 @{
     ViewData["Title"] = "User Edit";
 }
@@ -10,13 +10,11 @@
             <input type="hidden" name="Id" value="@Model.Id" />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-floating">
-                <label asp-for="FirstName" class="form-label"></label>
                 <input asp-for="FirstName" class="form-control" aria-required="true" />
                 <span asp-validation-for="FirstName" class="text-danger"></span>
             </div>
             <div class="form-floating">
-                <label asp-for="LastName" class="form-label"></label>
-                <input asp-for="LastName" class="form-control" autocomplete="current-password" aria-required="true" />
+                <input asp-for="LastName" class="form-control" aria-required="true" />
                 <span asp-validation-for="LastName" class="text-danger"></span>
             </div>
             <div class="row">&nbsp;</div>

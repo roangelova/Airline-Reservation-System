@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace AirlineReservationSystem.Core.Models.AdminArea.Route
 {
     using static DataConstants;
-    public class AddRouteVM
+    public class AddFlightRouteVM
     {
 
         [Required]

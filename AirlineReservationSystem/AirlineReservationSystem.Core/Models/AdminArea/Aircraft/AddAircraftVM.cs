@@ -10,7 +10,7 @@ namespace AirlineReservationSystem.Core.Models.AdminArea.Aircraft
 
         [Required]
         [Display(Name = "Aircraft Model")]
-        public string Model { get; set; }
+        public string AircraftModel { get; set; }
 
         [Required]
         [Display(Name = "Aircraft Capacity")]

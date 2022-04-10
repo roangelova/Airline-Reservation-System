@@ -1,0 +1,15 @@
+﻿@{
+    ViewData["Title"] = "Flights Management";
+}
+
+<h1>Please choose an action: </h1>
+<div>
+<a asp-area="admin" asp-action="AddFlight" asp-controller="flightroute" type="button" class="buttons-div btn btn-block bg-gradient-secondary btn-lg">Add new flight</a>
+<a asp-area="admin" asp-action="RemoveFlight" asp-controller="flightroute" type="button" class="buttons-div btn btn-block bg-gradient-secondary btn-lg">Remove flight</a>
+<a asp-area="admin" asp-action="CancelFlight" asp-controller="flightroute" type="button" class="buttons-div btn btn-block bg-gradient-secondary btn-lg">Cancel flight</a>
+
+</div>
+<br/>
+<div class="alert alert-info alert-dismissible">
+<h5><i class="icon fas fa-info"></i> Important!</h5>Please note that you can only delete flights with zero bookings! To cancel a flight with bookings, please use the "cancel flight" option!
+</div>

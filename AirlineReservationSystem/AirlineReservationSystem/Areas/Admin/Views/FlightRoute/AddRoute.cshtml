@@ -1,5 +1,9 @@
 ﻿@using AirlineReservationSystem.Core.Models.AdminArea.Route;
-@model AddRouteVM
+@model AddFlightRouteVM
+
+@{
+    ViewData["Title"] = "Add flight route";
+}
 
 <div class="col-md-6">
     <div class="card card-primary">
@@ -19,7 +23,7 @@
             </div>
 
             <div class="card-footer">
-                <button type="submit" class="btn btn-primary">Add route</button>
+                <button type="submit" formmethod="post" class="btn btn-primary">Add route</button>
             </div>
         </form>
     </div>

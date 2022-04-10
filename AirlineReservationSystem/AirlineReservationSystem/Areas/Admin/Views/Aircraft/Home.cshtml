@@ -1,10 +1,28 @@
-﻿
+﻿@using AirlineReservationSystem.Core.Models.AdminArea.Aircraft;
+@model IEnumerable<AddAircraftVM>
+
 @{
-
+    ViewData["Title"] = "Fleet Management";
 }
-
+<section>
 <h1>Please choose an action: </h1>
-<div>
-<a asp-area="admin" asp-action="AddAircraft" asp-controller="aircraft" type="button" class="btn btn-block bg-gradient-secondary btn-lg">Add an Aircraft</a>
-<a asp-area="admin" asp-action="RemoveAircraft" asp-controller="aircraft" type="button" class="btn btn-block bg-gradient-secondary btn-lg">Remove an Aircraft</a>
+<div style="justify-content:center">
+<a asp-area="admin" asp-action="AddAircraft" asp-controller="aircraft" type="button" class="buttons-div" class="btn btn-block bg-gradient-secondary btn-lg">Add an Aircraft</a>
+<a asp-area="admin" asp-action="RemoveAircraft" asp-controller="aircraft" type="button"  class="buttons-div" class="btn btn-block bg-gradient-secondary btn-lg">Remove an Aircraft</a>
 </div>
+</section>
+<br/>
+
+<section>
+<h1> Current aircraft in fleet: </h1> 
+<br/>
+<br/>
+@foreach (var aircraft in Model)
+{
+<div class="aircraft-board">
+                    <h2 style="font-size:18px" class="AircraftManufacturer">Manufacturer: @aircraft.Manufacturer</h2>
+                    <h2 style="font-size:18px" class="aircraftModel">Aircraft Model: @aircraft.AircraftModel</h2>
+                    <h2 style="font-size:18px" class="aircraftCapacity">Capacity: @aircraft.Capacity</h2>
+ </div>
+}
+</section>

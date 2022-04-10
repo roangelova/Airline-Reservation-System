@@ -1,5 +1,5 @@
 ﻿@using AirlineReservationSystem.Core.Models.AdminArea.Aircraft;
-@model AddAircraftVM
+@model AddAircraftVM;
 
 <div class="col-md-6">
     <div class="card card-primary">
@@ -13,8 +13,8 @@
                     <input type="text" class="form-control" name="Manufacturer" id="manufacturerId" placeholder="Enter aircraft manufacturer">
                 </div>
                 <div class="form-group">
-                    <label for="Model">Model</label>
-                    <input type="text" class="form-control" name="Model" id="modelId" placeholder="Enter aircraft model">
+                    <label for="AircraftModel">AircraftModel</label>
+                    <input type="text" class="form-control" name="AircraftModel" id="modelId" placeholder="Enter aircraft model">
                 </div>
                 <div class="form-group">
                     <label for="Capacity">Capacity</label>
@@ -23,7 +23,7 @@
             </div>
 
             <div class="card-footer">
-                <button type="submit" class="btn btn-primary">Add to fleet</button>
+                <button type="submit" formmethod="post"  class="btn btn-primary">Add to fleet</button>
             </div>
         </form>
     </div>

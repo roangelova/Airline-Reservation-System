@@ -1,11 +1,8 @@
 ﻿using AirlineReservationSystem.Core.Contracts;
 using AirlineReservationSystem.Core.Models.AdminArea.Aircraft;
+using AirlineReservationSystem.Infrastructure.Models;
 using AirlineReservationSystem.Infrastructure.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace AirlineReservationSystem.Core.Services
 {
@@ -17,9 +14,40 @@ namespace AirlineReservationSystem.Core.Services
         {
             repo = _repo;
         }
-        public Task<AddAircraftVM> AddAircraft()
+
+        public async Task<bool> AddAircraft(AddAircraftVM model)
         {
-            throw new NotImplementedException();
+
+            bool addedSuccessfully = false;
+
+            var aircraft = new Aircraft()
+            {
+                Manufacturer = model.Manufacturer,
+                Model = model.AircraftModel,
+                Capacity = int.Parse(model.Capacity),
+                ImageUrl = model.ImageUrl
+            };
+
+           await repo.AddAsync(aircraft);
+            await repo.SaveChangesAsync();
+
+            return addedSuccessfully ;
+
+
+        }
+
+        public async Task<IEnumerable<AddAircraftVM>> GetAllAircraft()
+        {
+            return await repo.All<Aircraft>()
+                .Select(a =>
+                new AddAircraftVM
+                {
+                    Manufacturer = a.Manufacturer,
+                    AircraftModel = a.Model,
+                    Capacity = a.Capacity.ToString(),
+                    ImageUrl = a.ImageUrl
+                })
+                .ToListAsync();
         }
     }
 }

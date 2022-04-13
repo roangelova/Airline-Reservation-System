@@ -13,20 +13,24 @@
         <form>
             <div class="card-body">
                 <div class="form-group">
-                    <label for="Manufacturer">Manufacturer</label>
-                    <input type="text" class="form-control" name="Manufacturer" id="manufacturerId" placeholder="Enter aircraft manufacturer">
+                    <label asp-for="Manufacturer">Manufacturer</label>
+                    <input asp-for="Manufacturer" type="text" class="form-control" name="Manufacturer" id="manufacturerId" placeholder="Enter aircraft manufacturer">
+                    <span asp-validation-for="Manufacturer" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label for="AircraftModel">AircraftModel</label>
-                    <input type="text" class="form-control" name="AircraftModel" id="modelId" placeholder="Enter aircraft model">
+                    <label asp-for="AircraftModel">AircraftModel</label>
+                    <input asp-for="AircraftModel" type="text" class="form-control" name="AircraftModel" id="modelId" placeholder="Enter aircraft model">
+                    <span asp-validation-for="AircraftModel" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label for="Capacity">Capacity</label>
-                    <input type="text" class="form-control" id="capacityId" name="Capacity" placeholder="Enter aircraft capacity">
+                    <label asp-for="Capacity">Capacity</label>
+                    <input asp-for="Capacity" type="text" class="form-control" id="capacityId" name="Capacity" placeholder="Enter aircraft capacity">
+                    <span asp-validation-for="Capacity" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label for="ImageUrl">Image Url</label>
-                    <input type="text" class="form-control" id="ImageUrl" name="ImageUrl" placeholder="Enter aircraft image url">
+                    <label asp-for="ImageUrl">Image Url</label>
+                    <input asp-for="ImageUrl" type="text" class="form-control" id="ImageUrl" name="ImageUrl" placeholder="Enter aircraft image url">
+                    <span asp-validation-for="ImageUrl" class="text-danger"></span> 
                 </div>
             </div>
 
@@ -36,3 +40,7 @@
         </form>
     </div>
 </div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

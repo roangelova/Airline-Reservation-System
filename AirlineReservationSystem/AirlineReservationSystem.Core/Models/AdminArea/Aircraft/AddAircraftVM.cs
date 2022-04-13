@@ -17,7 +17,7 @@ namespace AirlineReservationSystem.Core.Models.AdminArea.Aircraft
         public string AircraftModel { get; set; }
 
         [Required]
-        [Range(MinAircraftCapacity, MaxAircraftCapacity, ErrorMessage = "Aircrafts {0} must be between {2} and {1}!")]
+        [Range(MinAircraftCapacity, MaxAircraftCapacity, ErrorMessage = "Aircrafts {0} must be between {1} and {2}!")]
         [Display(Name = "Aircraft Capacity")]
         public string Capacity { get; set; }
 

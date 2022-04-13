@@ -13,12 +13,14 @@
         <form>
             <div class="card-body">
                 <div class="form-group">
-                    <label for="City">City</label>
-                    <input type="text" class="form-control" name="City" id="cityId" placeholder="Enter city name">
+                    <label asp-for="City">City</label>
+                    <input asp-for="City" type="text" class="form-control" name="City" id="cityId" placeholder="Enter city name">
+                     <span asp-validation-for="City" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label for="IATA">IATA code</label>
-                    <input type="text" class="form-control" name="IATA" id="IATAId" placeholder="Enter valid IATA code">
+                    <label asp-for="IATA">IATA code</label>
+                    <input asp-for="IATA" type="text" class="form-control" name="IATA" id="IATAId" placeholder="Enter valid IATA code">
+                     <span asp-validation-for="IATA" class="text-danger"></span>
                 </div>
             </div>
 
@@ -28,3 +30,7 @@
         </form>
     </div>
 </div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

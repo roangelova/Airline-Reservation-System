@@ -2,6 +2,7 @@
 using AirlineReservationSystem.Core.Models.AdminArea.Route;
 using AirlineReservationSystem.Infrastructure.Models;
 using AirlineReservationSystem.Infrastructure.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace AirlineReservationSystem.Core.Services
 {
@@ -31,6 +32,16 @@ namespace AirlineReservationSystem.Core.Services
 
             return addedSuccessfully;
 
+        }
+
+        public async Task<IEnumerable<ListFlightRouteVM>> GetAllDepartureRoutes()
+        {
+            return await repo.All<FlightRoute>()
+                 .Select(f => new ListFlightRouteVM
+                 {
+                     City = f.City
+                 })
+                 .ToListAsync();
         }
     }
 }

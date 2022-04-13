@@ -13,11 +13,12 @@ namespace AirlineReservationSystem.Core.Models.AdminArea.Route
     {
 
         [Required]
+        [StringLength(GeneralMaxLength, ErrorMessage = "{0} must not exceed {1}")]
         [Display(Name = "City Name")]
         public string City { get; set; }
 
         [Required]
-        [StringLength(IATACodeMaxLength)]
+        [StringLength(IATACodeMaxLength, ErrorMessage = "{0} must not exceed {1}")]
         public string IATA { get; set; }
 
     }

@@ -7,7 +7,7 @@ namespace AirlineReservationSystem.Infrastructure.Models
     public class Flight
     {
         [Key]
-        public string FlightId { get; set; }
+        public string FlightId { get; set; } = Guid.NewGuid().ToString();
 
         [ForeignKey(nameof(From))]
         public string FromId { get; set; }
@@ -26,9 +26,6 @@ namespace AirlineReservationSystem.Infrastructure.Models
         public DateTime FlightInformation { get; set; }
 
         public Status FlightStatus { get; set; }
-
-        [Required]
-        public decimal FlightTime { get; set; }
 
         [Required]
         public Aircraft Aircraft { get; set; }

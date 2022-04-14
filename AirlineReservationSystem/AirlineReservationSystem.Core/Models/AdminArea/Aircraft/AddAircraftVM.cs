@@ -6,6 +6,8 @@ namespace AirlineReservationSystem.Core.Models.AdminArea.Aircraft
     using static DataConstants;
     public class AddAircraftVM
     {
+        public string Id { get; set; }
+
         [Required]
         [StringLength(GeneralMaxLength, ErrorMessage = "{0} length must not exceed {1}!")]
         [Display(Name = "Aircraft Manufacturer")]

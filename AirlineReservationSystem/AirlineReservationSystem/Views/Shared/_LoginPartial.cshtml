@@ -5,9 +5,9 @@
 
 
     @if (SignInManager.IsSignedIn(User))
-    {
-        <li >
-            <a asp-area="" asp-controller="Home" asp-action="Privacy">Book a flight</a>
+{
+    <li >
+            <a asp-area="" asp-controller="Booking" asp-action="Book">Book a flight</a>
         </li>
         <li >
             <a  asp-area="" asp-controller="Home" asp-action="Privacy">My bookings</a>
@@ -20,8 +20,8 @@
                 Logout
             </a>
         </li>
-    }
-    else
+}
+else
     {
         <li class="nav-item">
             <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>

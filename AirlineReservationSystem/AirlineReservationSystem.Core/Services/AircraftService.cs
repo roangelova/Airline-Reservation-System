@@ -45,7 +45,9 @@ namespace AirlineReservationSystem.Core.Services
                     Manufacturer = a.Manufacturer,
                     AircraftModel = a.Model,
                     Capacity = a.Capacity.ToString(),
-                    ImageUrl = a.ImageUrl
+                    ImageUrl = a.ImageUrl,
+                    Id = a.AircraftId
+
                 })
                 .ToListAsync();
         }

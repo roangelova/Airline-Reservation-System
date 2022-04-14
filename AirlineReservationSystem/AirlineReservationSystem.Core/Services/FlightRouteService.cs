@@ -39,7 +39,8 @@ namespace AirlineReservationSystem.Core.Services
             return await repo.All<FlightRoute>()
                  .Select(f => new ListFlightRouteVM
                  {
-                     City = f.City
+                     City = f.City,
+                     Id = f.RouteId
                  })
                  .ToListAsync();
         }

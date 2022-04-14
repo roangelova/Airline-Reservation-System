@@ -3,6 +3,8 @@ using AirlineReservationSystem.Core.Services;
 using AirlineReservationSystem.Data;
 using AirlineReservationSystem.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace AirlineReservationSystem.Extensions
 {
@@ -16,6 +18,7 @@ namespace AirlineReservationSystem.Extensions
                 services.AddScoped<IUserService, UserService>();
                 services.AddScoped<IAircraftService, AircraftService>();
                 services.AddScoped<IFlightRouteService, FlightRouteService>();
+                services.AddScoped<IFlightService, FlightService>();
                     
 
                 return services;

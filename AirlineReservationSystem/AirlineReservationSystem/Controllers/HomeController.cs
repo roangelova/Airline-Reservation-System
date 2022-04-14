@@ -1,43 +1,28 @@
 ﻿using AirlineReservationSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Logging;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace AirlineReservationSystem.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IDistributedCache cache;
 
         private readonly ILogger<HomeController> logger;
 
-        public HomeController(ILogger<HomeController> _logger, IDistributedCache _cache)
+        public HomeController(ILogger<HomeController> _logger)
         {
             logger = _logger;
-            cache = _cache;
 
         }
 
         public async  Task<IActionResult> Index()
         {
-            DateTime dateTime = DateTime.Now;
+            
 
-            var cachedDate = await cache.GetStringAsync("cachedTime");
-
-            if (cachedDate == null)
-            {
-                cachedDate = dateTime.ToString();
-                DistributedCacheEntryOptions options = new DistributedCacheEntryOptions()
-                {
-                    SlidingExpiration = TimeSpan.FromSeconds(20),
-                    AbsoluteExpiration= DateTime.Now.AddSeconds(60)
-                };
-
-                await cache.SetStringAsync("cachedTime", cachedDate, options);
-            }
-
-
-            return View("Index", cachedDate);
+            return View();
         }
 
         public IActionResult Privacy()

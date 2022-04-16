@@ -1,6 +1,8 @@
 ﻿using AirlineReservationSystem.Core.Contracts;
 using AirlineReservationSystem.Core.Models.User_Area;
+using AirlineReservationSystem.Infrastructure.Models;
 using AirlineReservationSystem.Infrastructure.Repositories;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,9 +20,18 @@ namespace AirlineReservationSystem.Core.Services
             repo = _repo;
         }
 
-        public Task<IEnumerable<AvailableFlightsVM>> GetAllAvailableFlight()
+        public async Task<IEnumerable<AvailableFlightsVM>> GetAllAvailableFlights()
         {
-            throw new NotImplementedException();
+            return await repo.All<Flight>()
+                .Select(x =>
+                new AvailableFlightsVM
+                {
+                    DepartureDestination = x.To.City,
+                    ArrivalDestination = x.From.City,
+                    DateAndTime = x.FlightInformation.ToString(),
+                    Price = x.StandardTicketPrice.ToString(),
+                })
+                .ToListAsync();
         }
     }
 }

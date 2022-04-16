@@ -9,6 +9,6 @@ namespace AirlineReservationSystem.Core.Contracts
 {
     public interface IBookingService
     {
-        Task<IEnumerable<AvailableFlightsVM>> GetAllAvailableFlight();
+        Task<IEnumerable<AvailableFlightsVM>> GetAllAvailableFlights();
     }
 }

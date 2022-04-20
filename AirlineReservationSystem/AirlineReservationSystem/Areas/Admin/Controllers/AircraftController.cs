@@ -3,11 +3,12 @@ using AirlineReservationSystem.Core.Contracts;
 using AirlineReservationSystem.Core.Models.AdminArea.Aircraft;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace AirlineReservationSystem.Areas.Admin.Controllers
 {
-   // [Authorize(Roles = UserConstants.Role.FleetManagerRole)]
-   // [Authorize(Roles = UserConstants.Role.AdministratorRole)]
+    // [Authorize(Roles = UserConstants.Role.FleetManagerRole)]
+    // [Authorize(Roles = UserConstants.Role.AdministratorRole)]
     //TODO: remove Administrator Role after testing is done
     public class AircraftController : BaseController
     {
@@ -18,12 +19,14 @@ namespace AirlineReservationSystem.Areas.Admin.Controllers
             service = _service;
         }
 
-        public IActionResult Home()
+        public async Task<IActionResult> Home()
         {
+            var currentFleet = await service.GetAllAircraft();
+
             //TODO: show all available aircraft
-            return View();
-        } 
-        
+            return View(currentFleet);
+        }
+
         [HttpGet]
         public IActionResult AddAircraft()
         {
@@ -31,12 +34,21 @@ namespace AirlineReservationSystem.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddAircraft(AddAircraftVM model)
+        public async Task<IActionResult> AddAircraft(AddAircraftVM addAircraftVM)
         {
+            var addedSuccessfully = await service.AddAircraft(addAircraftVM);
 
+            //TODO: test once url images is added to aircraft model
 
-            //TODO: where should we redirect to once done?
-            return View();
+            if (addedSuccessfully)
+            {
+                return RedirectToAction("Home");
+            }
+            else
+            {
+                return View("CustomError");
+            }
+
         }
     }
 }

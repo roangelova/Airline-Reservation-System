@@ -28,11 +28,18 @@ namespace AirlineReservationSystem.Core.Services
                 ImageUrl = model.ImageUrl
             };
 
-           await repo.AddAsync(aircraft);
-            await repo.SaveChangesAsync();
 
-            return addedSuccessfully ;
+            try
+            {
+                await repo.AddAsync(aircraft);
+                await repo.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
 
+            }
+
+            return addedSuccessfully;
 
         }
 

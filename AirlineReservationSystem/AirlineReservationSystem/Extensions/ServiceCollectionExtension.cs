@@ -20,6 +20,8 @@ namespace AirlineReservationSystem.Extensions
                 services.AddScoped<IFlightRouteService, FlightRouteService>();
                 services.AddScoped<IFlightService, FlightService>();
                 services.AddScoped<IBookingService, BookingService>();
+                services.AddScoped<IPassengerService, PassengerService>();
+                services.AddScoped<IBaggageService, BaggageService>();
                     
 
                 return services;

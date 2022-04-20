@@ -1,5 +1,4 @@
 ﻿using AirlineReservationSystem.Core.Models.AdminArea.Route;
-using AirlineReservationSystem.Infrastructure.Models;
 
 namespace AirlineReservationSystem.Core.Contracts
 {

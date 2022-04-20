@@ -18,5 +18,12 @@ namespace AirlineReservationSystem.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+
+        public Task<IActionResult> EditPassengerData()
+        {
+            return View();
+        }
     }
 }

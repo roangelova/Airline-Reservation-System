@@ -2,8 +2,8 @@
 
 namespace AirlineReservationSystem.Core.Contracts
 {
-    public interface IBookingService
-    {
-        Task<IEnumerable<AvailableFlightsVM>> GetAllAvailableFlights();
+    public interface IPassengerService
+    { 
+        Task<bool> RegisterPassenger (EditPassengerDataVM model);
     }
 }

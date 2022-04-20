@@ -6,6 +6,7 @@
 }
 
 <div class="col-md-6">
+    <form>
     <div class="card card-primary">
         <div class="card-header">
             <h3 class="card-title">Passenger Information</h3>
@@ -21,17 +22,17 @@
             </div>
             <div class="form-group">
                 <label asp-for="DateOfBirth">Date of birth</label>
-                <input asp-for="DateOfBirth" type="text" id="DateOfBirth" class="form-control" value="01.01.2000">
+                <input asp-for="DateOfBirth" type="text" id="DateOfBirth" class="form-control" placeholder="01.01.2000">
                 <span asp-validation-for="DateOfBirth" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Nationality">Nationality</label>
-                <input asp-for="Nationality" type="text" id="Nationality" class="form-control" value="German">
+                <input asp-for="Nationality" type="text" id="Nationality" class="form-control" placeholder="German">
                 <span asp-validation-for="Nationality" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="DocumentId">Document Id *</label>
-                <input asp-for="DocumentId" type="text" id="DocumentId" class="form-control" value="123456789">
+                <input asp-for="DocumentId" type="text" id="DocumentId" class="form-control" placeholder="123456789">
                 <span asp-validation-for="DocumentId" class="text-danger"></span>
             </div>
             <button type="submit" formmethod="post" class="btn btn-primary">Submit</button>
@@ -41,5 +42,6 @@
             Please make sure you provide valid information, as your document will be screened at the security desk at the airport.
         </div>
     </div>
+    </form>
 
 </div>

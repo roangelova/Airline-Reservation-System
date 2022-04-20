@@ -1,16 +1,8 @@
 ﻿using AirlineReservationSystem.Core.Contracts;
-using AirlineReservationSystem.Core.Models.AdminArea.Aircraft;
 using AirlineReservationSystem.Core.Models.AdminArea.Flight;
-using AirlineReservationSystem.Core.Models.AdminArea.Route;
 using AirlineReservationSystem.Infrastructure.Models;
 using AirlineReservationSystem.Infrastructure.Repositories;
-using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Mvc;
 
 namespace AirlineReservationSystem.Core.Services
 {

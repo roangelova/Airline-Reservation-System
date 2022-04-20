@@ -13,6 +13,8 @@
 
         public const int DocumentIdMaxLength = 30;
 
+        public const int NationalityMaxLength = 20;
+
        //Currently only 1 passenger per booking is supported
        // public const int BookingMinPassengers = 1;
 

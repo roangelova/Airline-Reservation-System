@@ -9,6 +9,7 @@ namespace AirlineReservationSystem.Infrastructure.Models
         [Key]
         public string PassengerId { get; set; } = Guid.NewGuid().ToString();
 
+        //same as user if User == Passenger; else -> check-in Passenger
         [Required]
         [StringLength(NameMaxLength)]
         public string FirstName { get; set; }
@@ -23,6 +24,10 @@ namespace AirlineReservationSystem.Infrastructure.Models
 
         [Required]
         public string Nationality { get; set; }
+
+        [Required]
+        [StringLength(DocumentIdMaxLength)]
+        public string DocumentNumber { get; set; }
 
 
         public List<Booking> Bookings = new List<Booking>();

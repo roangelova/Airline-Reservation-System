@@ -11,9 +11,12 @@
 
         public const int IATACodeMaxLength = 3;
 
-        public const int BookingMinPassengers = 1;
+        public const int DocumentIdMaxLength = 30;
 
-        public const int BookingMaxPassengers = 8;
+       //Currently only 1 passenger per booking is supported
+       // public const int BookingMinPassengers = 1;
+
+       // public const int BookingMaxPassengers = 8;
 
         public const int MinAircraftCapacity = 150;
 

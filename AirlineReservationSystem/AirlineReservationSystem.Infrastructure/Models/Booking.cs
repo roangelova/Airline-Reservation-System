@@ -15,11 +15,14 @@ namespace AirlineReservationSystem.Infrastructure.Models
         [ForeignKey(nameof(Flight))]
         public string FlightId { get; set; }
 
-        [Range(BookingMinPassengers, BookingMaxPassengers)]
-        public int NumberOfPassengers { get; set; }
-
         public Status BookingStatus { get; set; }
 
-        public List<Passenger> Passengers = new List<Passenger>();
+        [Required]
+        public Passenger Passenger { get; set; }
+
+        [ForeignKey(nameof(Passenger))]
+        public string PassengerId { get; set; }
+
+
     }
 }

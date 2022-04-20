@@ -1,4 +1,7 @@
-﻿@{
+﻿@using AirlineReservationSystem.Core.Models.User_Area
+@model EditPassengerDataVM;
+
+@{
     ViewData["Title"] = "Passenger Data";
 }
 
@@ -14,22 +17,29 @@
             </div>
             <div class="form-group">
                 <label for="inputName">Last Name</label>
-                <input  readonly type="text" id="inputName" class="form-control" value="Mustermann">
+                <input readonly type="text" id="inputName" class="form-control" value="Mustermann">
             </div>
             <div class="form-group">
-                <label for="inputClientCompany">Date of birth</label>
-                <input type="text" id="inputClientCompany" class="form-control" value="01.01.2000">
+                <label asp-for="DateOfBirth">Date of birth</label>
+                <input asp-for="DateOfBirth" type="text" id="DateOfBirth" class="form-control" value="01.01.2000">
+                <span asp-validation-for="DateOfBirth" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label for="inputProjectLeader">Nationality</label>
-                <input type="text" id="inputProjectLeader" class="form-control" value="German">
+                <label asp-for="Nationality">Nationality</label>
+                <input asp-for="Nationality" type="text" id="Nationality" class="form-control" value="German">
+                <span asp-validation-for="Nationality" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label for="inputProjectLeader">Document Id *</label>
-                <input type="text" id="inputProjectLeader" class="form-control" value="123456789">
+                <label asp-for="DocumentId">Document Id *</label>
+                <input asp-for="DocumentId" type="text" id="DocumentId" class="form-control" value="123456789">
+                <span asp-validation-for="DocumentId" class="text-danger"></span>
             </div>
+            <button type="submit" formmethod="post" class="btn btn-primary">Submit</button>
         </div>
-            <div class="alert alert-info alert-dismissible">In case you need to perform a name change, please get in contact with our customer service. </br> Please make sure you provide valid information, as your document will be screened at the security desk at the airport.
+        <div class="alert alert-info alert-dismissible">
+            In case you need to perform a name change, please get in contact with our customer service.<br />
+            Please make sure you provide valid information, as your document will be screened at the security desk at the airport.
+        </div>
     </div>
 
 </div>

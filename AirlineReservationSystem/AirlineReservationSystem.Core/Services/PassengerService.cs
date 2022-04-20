@@ -2,6 +2,7 @@
 using AirlineReservationSystem.Core.Models.User_Area;
 using AirlineReservationSystem.Infrastructure.Models;
 using AirlineReservationSystem.Infrastructure.Repositories;
+using Microsoft.EntityFrameworkCore;
 using System.Globalization;
 
 namespace AirlineReservationSystem.Core.Services
@@ -14,13 +15,39 @@ namespace AirlineReservationSystem.Core.Services
         {
             repo = _repo;
         }
-        public async Task<bool> RegisterPassenger(EditPassengerDataVM model)
+
+        public async Task<string> GetPassengerId(string UserId)
+        {
+            var user = await repo.All<ApplicationUser>()
+                .FirstOrDefaultAsync(x => x.Id == UserId);
+
+            return user.PassengerId;
+        }
+
+        public async Task<IEnumerable<MyBookingsVM>> GetUserBookings(string id)
+        {
+            return await repo.All<Booking>()
+                .Where(x => x.PassengerId == id)
+                .Include(x => x.Flight)
+                .Select(x => new MyBookingsVM
+                {
+                    DepartureDestination = x.Flight.To.City,
+                    ArrivalDestination = x.Flight.From.City,
+                    DateAndTime = x.Flight.FlightInformation.ToString(),
+                    FlightStatus = x.Flight.FlightStatus.ToString(),
+                    FlightId = x.Flight.FlightId
+                })
+                .ToListAsync();
+        }
+
+        public async Task<(bool result, string passengerId)> RegisterPassenger(EditPassengerDataVM model)
         {
             var addedSuccessfully = false;
+            var passengerId = "";
 
             var passenger = new Passenger()
             {
-                DOB = DateTime.ParseExact(model.DateOfBirth, "g", CultureInfo.InvariantCulture),
+                DOB = DateTime.Parse(model.DateOfBirth),
                 Nationality = model.Nationality,
                 FirstName = model.FirstName,
                 LastName = model.LastName,
@@ -32,13 +59,14 @@ namespace AirlineReservationSystem.Core.Services
                 await repo.AddAsync(passenger);
                 await repo.SaveChangesAsync();
 
-             addedSuccessfully = true;
+                addedSuccessfully = true;
+                passengerId = passenger.PassengerId;
             }
             catch (Exception)
             {
             }
 
-            return addedSuccessfully;
+            return (addedSuccessfully, passengerId);
 
         }
     }

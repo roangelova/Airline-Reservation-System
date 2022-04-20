@@ -12,6 +12,14 @@ namespace AirlineReservationSystem.Core.Models.User_Area
     public class EditPassengerDataVM
     {
         [Required]
+        [StringLength(NameMaxLength, ErrorMessage = "The input should not exceed {1}!")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [StringLength(NameMaxLength, ErrorMessage = "The input should not exceed {1}!")]
+        public string LastName { get; set; }
+
+        [Required]
         public string DateOfBirth { get; set; }
 
         [Required]

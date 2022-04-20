@@ -10,6 +10,7 @@ namespace AirlineReservationSystem.Core.Contracts
         Task<UserEditVM> GetUserForEdit(string id);
 
         Task<bool> UpdateUser(UserEditVM model);
+        Task<bool> SetPassengerId(string userId, string PassengerId);
 
         Task<ApplicationUser> GetUserById(string id);
     }

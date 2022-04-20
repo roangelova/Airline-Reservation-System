@@ -4,16 +4,16 @@ using AirlineReservationSystem.Infrastructure.Models;
 using AirlineReservationSystem.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System.Web.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace AirlineReservationSystem.Core.Services
 {
-    public  class UserService : IUserService
+    public class UserService : IUserService
     {
         private readonly IApplicatioDbRepository repo;
 
-
-        public UserService(IApplicatioDbRepository _repo)
+        public UserService(
+            IApplicatioDbRepository _repo)
         {
             repo = _repo;
         }
@@ -40,7 +40,7 @@ namespace AirlineReservationSystem.Core.Services
         public async Task<IEnumerable<UserListVM>> GetUsers()
         {
             return await repo.All<ApplicationUser>()
-                .Select(u => 
+                .Select(u =>
                 new UserListVM
                 {
                     Email = u.Email,
@@ -48,6 +48,27 @@ namespace AirlineReservationSystem.Core.Services
                     Name = $"{u.FirstName} {u.LastName}"
                 })
                 .ToListAsync();
+        }
+
+        public async Task<bool> SetPassengerId(string userId, string PassengerId)
+        {
+            bool addedSuccessfully = false;
+            try
+            {
+                var user = await repo.GetByIdAsync<ApplicationUser>(userId);
+
+                user.PassengerId = PassengerId;
+
+                await repo.SaveChangesAsync();
+
+                addedSuccessfully = true;
+            }
+            catch (Exception)
+            {
+
+            }
+            return addedSuccessfully;
+
         }
 
         public async Task<bool> UpdateUser(UserEditVM model)

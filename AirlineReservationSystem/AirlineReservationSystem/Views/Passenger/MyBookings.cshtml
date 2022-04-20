@@ -1,0 +1,52 @@
+﻿@using AirlineReservationSystem.Core.Models.User_Area
+@model IEnumerable<MyBookingsVM>
+@{
+    ViewData["Title"] = "My bookings";
+}
+
+<div class="col-12">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">My flights</h3>
+        </div>
+
+        <div class="card-body table-responsive p-0">
+            <table class="table table-hover text-nowrap">
+                <thead>
+                    <tr>
+                        <th>Departure destination</th>
+                        <th>Arrival destination</th>
+                        <th>Flight Information</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @if (!Model.Any())
+                    {
+                        <td style="font-size:18px">You have no bookings yet!</td>
+                    }
+                    else
+                    {
+                        <tr>
+                            @foreach (var booking in Model)
+                            {
+                                <td>@booking.DepartureDestination</td>
+                                <td>@booking.DepartureDestination</td>
+                                <td>@booking.DateAndTime</td>
+                                <td>@booking.FlightStatus</td>
+                                <td><button type="submit" formmethod="post" id="" class="btn btn-primary">Cancel flight</button></td>
+                            }
+                        </tr>
+                    }
+
+
+                </tbody>
+            </table>
+        </div>
+        <div class="alert alert-info alert-dismissible">
+            Please note that canceling a flight is final and irrevirsible!
+        </div>
+    </div>
+
+</div>

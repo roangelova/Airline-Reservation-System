@@ -1,5 +1,7 @@
 ﻿using AirlineReservationSystem.Core.Contracts;
 using AirlineReservationSystem.Core.Models.User_Area;
+using AirlineReservationSystem.Infrastructure.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AirlineReservationSystem.Controllers
@@ -7,16 +9,32 @@ namespace AirlineReservationSystem.Controllers
     public class PassengerController : BaseController
     {
         private readonly IPassengerService passengerService;
+        private readonly IUserService userService;
+        private readonly UserManager<ApplicationUser> userManager;
 
-        public PassengerController(IPassengerService _passengerService)
+        public PassengerController(
+            IPassengerService _passengerService, IUserService _userService,
+           UserManager<ApplicationUser> _userManager)
         {
             passengerService = _passengerService;
+            userService = _userService;
+            userManager = _userManager;
         }
 
 
         public IActionResult FlightInfo()
         {
             return View();
+        }
+
+        public async Task<IActionResult> MyBookings()
+        {
+            var user = await userManager.GetUserAsync(this.User);
+            var currentUserId = await userManager.GetUserIdAsync(user);
+
+            var userBookings = await passengerService.GetUserBookings(currentUserId);
+
+            return View(userBookings);
         }
 
         public IActionResult EditPassengerData()
@@ -33,7 +51,12 @@ namespace AirlineReservationSystem.Controllers
 
         public async Task<IActionResult> EditPassengerData(EditPassengerDataVM model)
         {
-            var registeredSuccessfully = await passengerService.RegisterPassenger(model);
+            var (registeredSuccessfully, passengerId) = await passengerService.RegisterPassenger(model);
+
+            var user = await userManager.GetUserAsync(this.User);
+            var currentUserId = await userManager.GetUserIdAsync(user);
+
+            await userService.SetPassengerId(currentUserId, passengerId);
 
             if (registeredSuccessfully)
             {

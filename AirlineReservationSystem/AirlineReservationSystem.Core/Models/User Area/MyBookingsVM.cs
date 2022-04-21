@@ -2,6 +2,7 @@
 {
     public class MyBookingsVM
     {
+        public string BookingId { get; }
         public string DepartureDestination { get; set; }
         public string ArrivalDestination { get; set; }
         public string DateAndTime { get; set; }

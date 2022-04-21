@@ -26,19 +26,28 @@ namespace AirlineReservationSystem.Core.Services
 
         public async Task<IEnumerable<MyBookingsVM>> GetUserBookings(string id)
         {
-            return await repo.All<Booking>()
-                .Where(x => x.PassengerId == id)
-                .Include(x => x.Flight)
-                .Select(x => new MyBookingsVM
-                {
-                    BookingId = x.BookingNumber,
-                    DepartureDestination = x.Flight.To.City,
-                    ArrivalDestination = x.Flight.From.City,
-                    DateAndTime = x.Flight.FlightInformation.ToString(),
-                    FlightStatus = x.Flight.FlightStatus.ToString(),
-                    FlightId = x.Flight.FlightId
-                })
-                .ToListAsync();
+            var BaggageCount = await repo.All<Baggage>()
+                .Where(x => x.PassengerId == id).ToListAsync();
+
+            var Result = await repo.All<Booking>()
+                            .Where(x => x.PassengerId == id)
+                            .Include(x => x.Flight)
+                            .Select(x => new MyBookingsVM
+                            {
+                                BookingId = x.BookingNumber,
+                                DepartureDestination = x.Flight.To.City,
+                                ArrivalDestination = x.Flight.From.City,
+                                DateAndTime = x.Flight.FlightInformation.ToString(),
+                                FlightStatus = x.Flight.FlightStatus.ToString(),
+                                FlightId = x.Flight.FlightId
+                            })
+                            .ToListAsync();
+
+            Result.ForEach(x => x.BaggagePiecesCount = BaggageCount.Where(y => y.BookingId == x.BookingId).Count().ToString());
+
+            return Result;
+
+
         }
 
         public async Task<(bool result, string passengerId)> RegisterPassenger(EditPassengerDataVM model)

@@ -19,7 +19,6 @@ namespace AirlineReservationSystem.Core.Services
         {
             bool bookedSuccessfully = false;
 
-            //WE NEED PASSENGER ID INSTEAD OF USER ID
             var booking = new Booking()
             {
                 FlightId = FlightId,

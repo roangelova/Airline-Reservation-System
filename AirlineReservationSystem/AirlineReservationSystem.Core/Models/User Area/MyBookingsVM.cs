@@ -8,6 +8,7 @@
         public string DateAndTime { get; set; }
         public string FlightStatus { get; set; }
 
+        public string BaggagePiecesCount { get; set; }
         public string FlightId { get; set; }
     }
 }

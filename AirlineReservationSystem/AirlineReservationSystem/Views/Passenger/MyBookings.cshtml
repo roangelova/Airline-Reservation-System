@@ -36,8 +36,9 @@
                             <td>@booking.DateAndTime</td>
                             <td>@booking.FlightStatus</td>
                             <td>
-                                <form asp-controller="booking" formmethod="post" asp-action="CancelBooking" asp-route-id="@booking.BookingId">
-                                    <button type="submit" class="btn btn-primary">Cancel booking</button>
+                                <form >
+                                    <button asp-controller="booking" formmethod="post" asp-action="CancelBooking" asp-route-id="@booking.BookingId" type="submit" class="btn btn-primary">Cancel booking</button>
+                                    <button asp-controller="baggage" formmethod="post" asp-action="AddBaggage" asp-route-id="@booking.BookingId" type="submit" class="btn btn-primary">Add baggage</button>
                                 </form>
                             </td>
                             }

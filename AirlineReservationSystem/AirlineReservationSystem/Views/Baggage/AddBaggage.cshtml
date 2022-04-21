@@ -1,0 +1,34 @@
+﻿@{
+    ViewData["Title"] = "Add baggage";
+
+    var sizes = (List<SelectListItem>)ViewBag.AvailableSizes;
+}
+
+<div class="card card-primary" data-select2-id="33">
+    <div class="card-header">
+        <h3 class="card-title">Add baggage</h3>
+    </div>
+
+    <div class="card-body" data-select2-id="32">
+        <div class="row" data-select2-id="31">
+            <div class="col-md-6" data-select2-id="30">
+                <form>
+                    <div class="form-group" data-select2-id="29">
+                        <label for="DepartureCity">Choose a size:</label>
+                        <select asp-items=@sizes class="form-control select2 select2-hidden-accessible" style="width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true">
+                        </select>
+                    </div>
+                    <div>
+                        <button type="submit" formmethod="post" class="btn btn-primary">Book</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="alert alert-info alert-dismissible">
+    Please be advised that your baggage will be weighted at at the check-in desk!
+</div>
+

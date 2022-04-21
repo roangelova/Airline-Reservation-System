@@ -31,8 +31,9 @@ namespace AirlineReservationSystem.Controllers
         {
             var user = await userManager.GetUserAsync(this.User);
             var currentUserId = await userManager.GetUserIdAsync(user);
+            var passengerId = await passengerService.GetPassengerId(currentUserId);
 
-            var userBookings = await passengerService.GetUserBookings(currentUserId);
+            var userBookings = await passengerService.GetUserBookings(passengerId);
 
             return View(userBookings);
         }

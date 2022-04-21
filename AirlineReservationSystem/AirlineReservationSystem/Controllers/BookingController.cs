@@ -30,9 +30,8 @@ namespace AirlineReservationSystem.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> Book(string FlightId)
+        public async Task<IActionResult> Book(string id)
         {
-            //GET USER AND PASSENGER ID
             var user = await userManager.GetUserAsync(this.User);
             var currentUserId = await userManager.GetUserIdAsync(user);
             var PassengerId = await passengerService.GetPassengerId(currentUserId);
@@ -42,7 +41,7 @@ namespace AirlineReservationSystem.Controllers
                 return View("PassengerMustBeRegisteredError");
             }
 
-            bool bookedSuccessfully = await bookingService.BookPassengerFlight(FlightId, PassengerId);
+            bool bookedSuccessfully = await bookingService.BookPassengerFlight(id, PassengerId);
 
             if (bookedSuccessfully)
             {
@@ -52,6 +51,23 @@ namespace AirlineReservationSystem.Controllers
             {
                 return View("CustomError");
             }
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> CancelBooking(string id)
+        {
+           bool success =  await bookingService.CancelBooking(id);
+
+            if (success)
+            {
+                return RedirectToAction("MyBookings", "Passenger");
+            }
+            else
+            {
+                return View("CustomError");
+            }
+
         }
     }
 }

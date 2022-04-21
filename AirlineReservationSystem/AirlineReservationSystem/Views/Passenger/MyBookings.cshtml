@@ -24,20 +24,24 @@
 
                     @if (!Model.Any())
                     {
-                        <td style="font-size:18px">You have no bookings yet!</td>
+                    <td style="font-size:18px">You have no bookings yet!</td>
                     }
                     else
                     {
-                        <tr>
+                    <tr>
                             @foreach (var booking in Model)
                             {
-                                <td>@booking.DepartureDestination</td>
-                                <td>@booking.DepartureDestination</td>
-                                <td>@booking.DateAndTime</td>
-                                <td>@booking.FlightStatus</td>
-                                <td><button type="submit" formmethod="post" id="" class="btn btn-primary">Cancel flight</button></td>
+                            <td>@booking.DepartureDestination</td>
+                            <td>@booking.ArrivalDestination</td>
+                            <td>@booking.DateAndTime</td>
+                            <td>@booking.FlightStatus</td>
+                            <td>
+                                <form asp-controller="booking" formmethod="post" asp-action="CancelBooking" asp-route-id="@booking.BookingId">
+                                    <button type="submit" class="btn btn-primary">Cancel booking</button>
+                                </form>
+                            </td>
                             }
-                        </tr>
+                    </tr>
                     }
 
 

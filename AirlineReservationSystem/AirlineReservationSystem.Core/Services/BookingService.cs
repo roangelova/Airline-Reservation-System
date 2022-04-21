@@ -29,8 +29,8 @@ namespace AirlineReservationSystem.Core.Services
 
             try
             {
-               await repo.AddAsync<Booking>(booking);
-                await repo.SaveChangesAsync();  
+                await repo.AddAsync<Booking>(booking);
+                await repo.SaveChangesAsync();
                 bookedSuccessfully = true;
 
                 return bookedSuccessfully;
@@ -41,6 +41,24 @@ namespace AirlineReservationSystem.Core.Services
             }
 
             return bookedSuccessfully;
+        }
+
+        public async Task<bool> CancelBooking(string BookingId)
+        {
+            bool removedSuccessfully = false;
+
+            try
+            {
+                await repo.DeleteAsync<Booking>(BookingId);
+                await repo.SaveChangesAsync();
+                removedSuccessfully = true;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+            return removedSuccessfully;
         }
 
         public async Task<IEnumerable<AvailableFlightsVM>> GetAllAvailableFlights()

@@ -31,6 +31,7 @@ namespace AirlineReservationSystem.Core.Services
                 .Include(x => x.Flight)
                 .Select(x => new MyBookingsVM
                 {
+                    BookingId = x.BookingNumber,
                     DepartureDestination = x.Flight.To.City,
                     ArrivalDestination = x.Flight.From.City,
                     DateAndTime = x.Flight.FlightInformation.ToString(),

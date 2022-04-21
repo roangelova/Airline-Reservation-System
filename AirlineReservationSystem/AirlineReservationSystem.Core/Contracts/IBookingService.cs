@@ -7,5 +7,6 @@ namespace AirlineReservationSystem.Core.Contracts
         Task<IEnumerable<AvailableFlightsVM>> GetAllAvailableFlights();
 
         Task<bool> BookPassengerFlight(string FlightId, string PassengerId);
+        Task<bool> CancelBooking(string BookingId );
     }
 }

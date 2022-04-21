@@ -17,6 +17,7 @@
                         <th>Departure destination</th>
                         <th>Arrival destination</th>
                         <th>Flight Information</th>
+                        <th>Baggage pieces count</th>
                         <th>Status</th>
                     </tr>
                 </thead>
@@ -28,21 +29,22 @@
                     }
                     else
                     {
-                    <tr>
-                            @foreach (var booking in Model)
-                            {
+                        @foreach (var booking in Model)
+                        {
+                        <tr>
                             <td>@booking.DepartureDestination</td>
                             <td>@booking.ArrivalDestination</td>
                             <td>@booking.DateAndTime</td>
+                            <td>@booking.BaggagePiecesCount</td>
                             <td>@booking.FlightStatus</td>
                             <td>
-                                <form >
+                                <form>
                                     <button asp-controller="booking" formmethod="post" asp-action="CancelBooking" asp-route-id="@booking.BookingId" type="submit" class="btn btn-primary">Cancel booking</button>
-                                    <button asp-controller="baggage" formmethod="post" asp-action="AddBaggage" asp-route-id="@booking.BookingId" type="submit" class="btn btn-primary">Add baggage</button>
+                                    <button asp-controller="baggage" asp-action="AddBaggage" asp-route-id="@booking.BookingId" type="submit" class="btn btn-primary">Add baggage</button>
                                 </form>
                             </td>
-                            }
-                    </tr>
+                        </tr>
+                        }
                     }
 
 

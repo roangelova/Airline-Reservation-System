@@ -1,4 +1,6 @@
-﻿@{
+﻿@using AirlineReservationSystem.Core.Models.User_Area
+@model AddBaggageVM;
+@{
     ViewData["Title"] = "Add baggage";
 
     var sizes = (List<SelectListItem>)ViewBag.AvailableSizes;
@@ -14,12 +16,12 @@
             <div class="col-md-6" data-select2-id="30">
                 <form>
                     <div class="form-group" data-select2-id="29">
-                        <label for="DepartureCity">Choose a size:</label>
-                        <select asp-items=@sizes class="form-control select2 select2-hidden-accessible" style="width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true">
+                        <label >Choose a size:</label>
+                        <select name="Size" asp-items=@sizes class="form-control select2 select2-hidden-accessible" style="width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true">
                         </select>
                     </div>
                     <div>
-                        <button type="submit" formmethod="post" class="btn btn-primary">Book</button>
+                        <button type="submit" asp-action="AddBaggage" asp-controller="Baggage" formmethod="post" class="btn btn-primary">Book</button>
                     </div>
                 </form>
             </div>

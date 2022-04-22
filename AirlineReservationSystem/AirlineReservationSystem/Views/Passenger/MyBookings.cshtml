@@ -25,25 +25,28 @@
 
                     @if (!Model.Any())
                     {
-                    <td style="font-size:18px">You have no bookings yet!</td>
+                        <tr>
+                            <td style="font-size:18px">You have no bookings yet!</td>
+                        </tr>
+
                     }
                     else
                     {
                         @foreach (var booking in Model)
                         {
-                        <tr>
-                            <td>@booking.DepartureDestination</td>
-                            <td>@booking.ArrivalDestination</td>
-                            <td>@booking.DateAndTime</td>
-                            <td>@booking.BaggagePiecesCount</td>
-                            <td>@booking.FlightStatus</td>
-                            <td>
-                                <form>
-                                    <button asp-controller="booking" formmethod="post" asp-action="CancelBooking" asp-route-id="@booking.BookingId" type="submit" class="btn btn-primary">Cancel booking</button>
-                                    <button asp-controller="baggage" asp-action="AddBaggage" asp-route-id="@booking.BookingId" type="submit" class="btn btn-primary">Add baggage</button>
-                                </form>
-                            </td>
-                        </tr>
+                            <tr>
+                                <td>@booking.DepartureDestination</td>
+                                <td>@booking.ArrivalDestination</td>
+                                <td>@booking.DateAndTime</td>
+                                <td>@booking.BaggagePiecesCount</td>
+                                <td>@booking.FlightStatus</td>
+                                <td>
+                                    <form>
+                                        <button asp-controller="booking" formmethod="post" asp-action="CancelBooking" asp-route-id="@booking.BookingId" type="submit" class="btn btn-primary">Cancel booking</button>
+                                        <button asp-controller="baggage" asp-action="AddBaggage" asp-route-id="@booking.BookingId" type="submit" class="btn btn-primary">Add baggage</button>
+                                    </form>
+                                </td>
+                            </tr>
                         }
                     }
 
@@ -54,6 +57,7 @@
         <div class="alert alert-info alert-dismissible">
             Please note that canceling a flight is final and irrevirsible!
         </div>
+        <div>You can view your past flights <a asp-action="GetArchivePastFlights" asp-controller="booking">here!</a> </div>
     </div>
 
 </div>

@@ -1,5 +1,6 @@
 ﻿using AirlineReservationSystem.Core.Contracts;
 using AirlineReservationSystem.Core.Models.AdminArea.Flight;
+using AirlineReservationSystem.Core.Models.User_Area;
 using AirlineReservationSystem.Infrastructure.Models;
 using AirlineReservationSystem.Infrastructure.Repositories;
 using System.Globalization;
@@ -40,6 +41,23 @@ namespace AirlineReservationSystem.Core.Services
             await repo.SaveChangesAsync();
 
             return addedSuccessfully;
+        }
+
+
+        public async Task<IEnumerable<AvailableFlightsVM>> GetAllAvailableFlights()
+        {
+            return await repo.All<Flight>()
+                .Where(f => f.isAvailable == true)
+                .Select(x =>
+                new AvailableFlightsVM
+                {
+                    DepartureDestination = x.To.City,
+                    ArrivalDestination = x.From.City,
+                    DateAndTime = x.FlightInformation.ToString(),
+                    Price = x.StandardTicketPrice.ToString(),
+                    FlightId = x.FlightId
+                })
+                .ToListAsync();
         }
     }
 }

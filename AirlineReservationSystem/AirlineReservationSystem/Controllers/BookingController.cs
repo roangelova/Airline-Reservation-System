@@ -7,23 +7,27 @@ namespace AirlineReservationSystem.Controllers
 {
     public class BookingController : BaseController
     {
+        private readonly IFlightService flightService;
         private readonly IBookingService bookingService;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IPassengerService passengerService;
 
         public BookingController(
-            IBookingService _bookingService,
+            IFlightService _flightService,
             UserManager<ApplicationUser> _userManager,
-            IPassengerService _passengerService)
+            IPassengerService _passengerService,
+            IBookingService _bookingService)
+            
         {
-            bookingService = _bookingService;
+            flightService = _flightService;
             userManager = _userManager;
             passengerService = _passengerService;
+            bookingService = _bookingService;
         }  
 
         public async Task<IActionResult> Book()
         {
-            var flights = await bookingService.GetAllAvailableFlights();
+            var flights = await flightService.GetAllAvailableFlights();
 
             return View(flights);
         }
@@ -69,5 +73,12 @@ namespace AirlineReservationSystem.Controllers
             }
 
         }
+
+
+        public IActionResult GetArchivePastFlights()
+        {
+            return View();
+        }
+
     }
 }

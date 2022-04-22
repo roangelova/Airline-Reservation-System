@@ -4,13 +4,16 @@ using AirlineReservationSystem.Core.Contracts;
 using AirlineReservationSystem.Core.Models.AdminArea.Users;
 using AirlineReservationSystem.Core.Models.Users;
 using AirlineReservationSystem.Infrastructure.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace AirlineReservationSystem.Areas.Admin.Controllers
 {
+   [Authorize(Roles = UserConstants.Role.AdministratorRole)]
     public class UserController : BaseController
     {
         private readonly RoleManager<IdentityRole> roleManager;
@@ -28,7 +31,7 @@ namespace AirlineReservationSystem.Areas.Admin.Controllers
             userManager = _userManager;
             userService = _userService;
         }
-        public IActionResult Index()
+        public IActionResult Home()
         {
             return View();
         }

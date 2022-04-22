@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace AirlineReservationSystem.Areas.Admin.Controllers
 {
-    // [Authorize(Roles = UserConstants.Role.FleetManagerRole)]
-    // [Authorize(Roles = UserConstants.Role.AdministratorRole)]
-    //TODO: remove Administrator Role after testing is done
+     [Authorize(Roles = UserConstants.Role.FleetManagerRole)]
+   
     public class AircraftController : BaseController
     {
         private readonly IAircraftService service;

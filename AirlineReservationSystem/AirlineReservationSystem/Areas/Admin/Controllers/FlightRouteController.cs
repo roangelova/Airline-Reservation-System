@@ -1,10 +1,13 @@
-﻿using AirlineReservationSystem.Core.Contracts;
+﻿using AirlineReservationSystem.Core;
+using AirlineReservationSystem.Core.Contracts;
 using AirlineReservationSystem.Core.Models.AdminArea.Route;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace AirlineReservationSystem.Areas.Admin.Controllers
 {
+    [Authorize(Roles = UserConstants.Role.FlightManagerRole)]
     public class FlightRouteController : BaseController
     {
         private readonly IFlightRouteService service;

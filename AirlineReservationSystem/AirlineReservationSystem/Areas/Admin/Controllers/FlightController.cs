@@ -1,5 +1,7 @@
-﻿using AirlineReservationSystem.Core.Contracts;
+﻿using AirlineReservationSystem.Core;
+using AirlineReservationSystem.Core.Contracts;
 using AirlineReservationSystem.Core.Models.AdminArea.Flight;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Linq;
@@ -7,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace AirlineReservationSystem.Areas.Admin.Controllers
 {
+    [Authorize(Roles = UserConstants.Role.FlightManagerRole)]
     public class FlightController : BaseController
     {
 

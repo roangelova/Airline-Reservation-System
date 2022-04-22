@@ -7,8 +7,9 @@ namespace AirlineReservationSystem.Core.Contracts
     {
         
         Task<bool> AddFlight(AddFlightVM model);
-
+        Task<bool> CancelFlight(string FlightId);
         Task<IEnumerable<AvailableFlightsVM>> GetAllAvailableFlights();
+        Task<IEnumerable<FlightsForCancellationVM>> GetFlightsForCancellation();
 
     }
 }

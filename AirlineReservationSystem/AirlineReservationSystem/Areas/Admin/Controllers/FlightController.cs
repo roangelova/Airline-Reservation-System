@@ -35,11 +35,6 @@ namespace AirlineReservationSystem.Areas.Admin.Controllers
 
         public async Task<IActionResult> AddFlight()
         {
-            //TODO 
-            //1. all airports for departure
-            //2. airports - departure airport
-            //3.all aircraft
-
            var availableAircrfats = await AircraftService.GetAllAircraft();
            var availableDepartures = await FlightRouteService.GetAllDepartureRoutes();
            
@@ -73,6 +68,28 @@ namespace AirlineReservationSystem.Areas.Admin.Controllers
 
             return RedirectToAction("Home");
 
+        }
+
+        public async Task<IActionResult> CancelFlight()
+        {
+            var flights = await flightService.GetFlightsForCancellation();
+
+            return View(flights);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CancelFlight(string id)
+        {
+           var result = await flightService.CancelFlight(id);
+
+            if (result)
+            {
+                return View("Success");
+            }
+            else
+            {
+                return View("CustomError");
+            }
         }
     }
 }

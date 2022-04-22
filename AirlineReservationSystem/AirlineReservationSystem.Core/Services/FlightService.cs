@@ -34,10 +34,10 @@ namespace AirlineReservationSystem.Core.Services
                 FlightStatus = Infrastructure.Status.Scheduled,
                 FromId = model.DepartureCity,
                 ToId = model.ArrivalCity,
-                StandardTicketPrice = decimal.Parse(model.StandardTicketPrice,CultureInfo.InvariantCulture),
+                StandardTicketPrice = decimal.Parse(model.StandardTicketPrice, CultureInfo.InvariantCulture),
 
             };
-            
+
 
             await repo.AddAsync(flight);
             await repo.SaveChangesAsync();
@@ -45,11 +45,30 @@ namespace AirlineReservationSystem.Core.Services
             return addedSuccessfully;
         }
 
+        public async Task<bool> CancelFlight(string FlightId)
+        {
+            bool canceled = false;
+            var FlightToCancel = await repo.GetByIdAsync<Flight>(FlightId);
+
+            try
+            {
+                FlightToCancel.FlightStatus = Status.Canceled;
+                await repo.SaveChangesAsync();
+                canceled = true;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return canceled;
+        }
 
         public async Task<IEnumerable<AvailableFlightsVM>> GetAllAvailableFlights()
         {
             return await repo.All<Flight>()
-                .Where(f => f.isAvailable == true && f.FlightStatus == Status.Scheduled)
+                .Where(f => f.FlightStatus == Status.Scheduled)
                 .Select(x =>
                 new AvailableFlightsVM
                 {
@@ -60,6 +79,28 @@ namespace AirlineReservationSystem.Core.Services
                     FlightId = x.FlightId
                 })
                 .ToListAsync();
+        }
+
+        public async Task<IEnumerable<FlightsForCancellationVM>> GetFlightsForCancellation()
+        {
+            var bookingsCount = await repo.All<Booking>()
+                .ToListAsync();
+
+            var flights = await repo.All<Flight>()
+                .Where(f => f.FlightStatus == Status.Scheduled)
+                .Select(f => new FlightsForCancellationVM
+                {
+                    DepartureDestination = f.To.City,
+                    ArrivalDestination = f.From.City,
+                    FlightId = f.FlightId,
+                    DateAndTime = f.FlightInformation.ToString(),
+                    Price = f.StandardTicketPrice.ToString()
+                })
+                .ToListAsync();
+
+            flights.ForEach(x => x.NumberOfBookings = bookingsCount.Where(y => x.FlightId == y.FlightId).Count().ToString());
+
+            return flights;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿@using AirlineReservationSystem.Core.Models.User_Area
+@using AirlineReservationSystem.Infrastructure
 @model IEnumerable<MyBookingsVM>
 @{
     ViewData["Title"] = "My bookings";
@@ -40,17 +41,24 @@
                                 <td>@booking.DateAndTime</td>
                                 <td>@booking.BaggagePiecesCount</td>
                                 <td>@booking.FlightStatus</td>
-                                <td>
-                                    <form>
+
+                                <form>
+                                    @if (booking.FlightStatus != Status.Canceled.ToString())
+                                    {
+                                    <td>
                                         <button asp-controller="booking" formmethod="post" asp-action="CancelBooking" asp-route-id="@booking.BookingId" type="submit" class="btn btn-primary">Cancel booking</button>
                                         <button asp-controller="baggage" asp-action="AddBaggage" asp-route-id="@booking.BookingId" type="submit" class="btn btn-primary">Add baggage</button>
-                                    </form>
-                                </td>
+                                    </td>
+                                    }
+                                    else
+                                    {
+                                    <td>You can't perform any actions on canceled flights! </td>
+                                    }
+                                </form>
+
                             </tr>
                         }
                     }
-
-
                 </tbody>
             </table>
         </div>

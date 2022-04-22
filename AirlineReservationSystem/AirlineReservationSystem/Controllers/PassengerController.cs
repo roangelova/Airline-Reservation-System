@@ -22,6 +22,9 @@ namespace AirlineReservationSystem.Controllers
         }
 
 
+        /// <summary>
+        /// Gets a static view with some flight information.
+        /// </summary>
         public IActionResult FlightInfo()
         {
             return View();
@@ -31,6 +34,7 @@ namespace AirlineReservationSystem.Controllers
         {
             var user = await userManager.GetUserAsync(this.User);
             var currentUserId = await userManager.GetUserIdAsync(user);
+
             var passengerId = await passengerService.GetPassengerId(currentUserId);
 
             var userBookings = await passengerService.GetUserBookings(passengerId);
@@ -38,8 +42,22 @@ namespace AirlineReservationSystem.Controllers
             return View(userBookings);
         }
 
-        public IActionResult EditPassengerData()
+        /// <summary>
+        /// The method checks if the passenger data is already registered. If yes, customers are not allowed to register again and are
+        /// redirected to a custom message view. Otherwise, users are redirected to the register passenger form.
+        /// </summary>
+        public async Task<IActionResult> EditPassengerData()
         {
+            var user = await userManager.GetUserAsync(this.User);
+            var currentUserId = await userManager.GetUserIdAsync(user);
+
+            var PassengerId = passengerService.GetPassengerId(currentUserId);
+
+            if (PassengerId != null)
+            {
+                return View("AlreadyRegistered");
+            }
+
             return View();
         }
 
@@ -48,14 +66,19 @@ namespace AirlineReservationSystem.Controllers
             return View();
         }
 
-        [HttpPost]
 
+        /// <summary>
+        /// Gets the viewmodel and passes it to the service, which registeres the passenger and returns the id. This is then passed 
+        /// to the userService, in order to set the passengerId of the user.
+        /// </summary>
+        /// <returns>A view, depending on the outcome of the register passenger method</returns>
+        [HttpPost]
         public async Task<IActionResult> EditPassengerData(EditPassengerDataVM model)
         {
-            var (registeredSuccessfully, passengerId) = await passengerService.RegisterPassenger(model);
-
             var user = await userManager.GetUserAsync(this.User);
             var currentUserId = await userManager.GetUserIdAsync(user);
+
+            var (registeredSuccessfully, passengerId) = await passengerService.RegisterPassenger(model);
 
             await userService.SetPassengerId(currentUserId, passengerId);
 
@@ -65,7 +88,6 @@ namespace AirlineReservationSystem.Controllers
             }
             else
             {
-
                 return View("CustomError");
             }
 

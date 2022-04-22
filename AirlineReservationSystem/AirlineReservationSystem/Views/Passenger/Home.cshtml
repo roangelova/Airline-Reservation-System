@@ -3,12 +3,12 @@
 }
 
 <div class="userDiv">
-    <div class="alert alert-info alert-dismissible">Please note that you must first submit your passenger information before booking or boarding your flight! You can do so under "Edit Passenger Data".
+    <div class="alert alert-info alert-dismissible">Please note that you must first submit your passenger information before booking or boarding your flight! You can do so under "Edit Passenger Data"!
+        <br/> You can view your past flights and report a lost baggage piece under "View archive past flights".
 </div>
 <ul class="userUl">
   <li class="userLi"><a class="userA" asp-controller="home" asp-action="index">Back to homepage</a></li>
   <li class="userLi"><a class="userA" asp-controller="passenger" asp-action="EditPassengerData">Edit Passenger Data</a></li>
-  <li class="userLi"><a class="userA" asp-controller="baggage" asp-action="ReportLostBaggage">Report lost baggage</a></li>
   <li class="userLi"><a class="userA" asp-controller="passenger" asp-action="FlightInfo">Important flight information</a></li>
   <li class="userLi"><a class="userA" asp-controller="booking" asp-action="GetArchivePastFlights">View archive past flights</a></li>
 </ul>

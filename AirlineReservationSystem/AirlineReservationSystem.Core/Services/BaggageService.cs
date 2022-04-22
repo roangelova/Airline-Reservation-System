@@ -2,6 +2,7 @@
 using AirlineReservationSystem.Core.Models.User_Area;
 using AirlineReservationSystem.Infrastructure.Models;
 using AirlineReservationSystem.Infrastructure.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace AirlineReservationSystem.Core.Services
 {
@@ -48,6 +49,20 @@ namespace AirlineReservationSystem.Core.Services
                 .ToArray();
             
             return availableSizes;
+        }
+
+        public async Task<IEnumerable<ReportLostBaggageVM>> GetBaggagesForBooking(string BookingId, string PassengerId)
+        {
+            return await repo.All<Baggage>()
+                .Where(x => x.PassengerId == PassengerId)
+                .Where(x => x.BookingId == BookingId)
+                .Select(x => new ReportLostBaggageVM
+                {
+                    BaggageId = x.BaggageId,
+                    IsReportedLost = x.IsReportedLost.ToString(),
+                    Size = x.Size.ToString(),
+                })
+                .ToListAsync(); 
         }
     }
 }

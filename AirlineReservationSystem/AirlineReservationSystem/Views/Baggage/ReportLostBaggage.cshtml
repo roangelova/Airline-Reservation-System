@@ -1,0 +1,53 @@
+﻿@using AirlineReservationSystem.Core.Models.User_Area
+
+@model IEnumerable<ReportLostBaggageVM>
+@{
+    ViewData["Title"] = "Report lost baggage";
+}
+
+<div class="col-12">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Hier you can view all booked baggaged for the chosen flight:</h3>
+        </div>
+
+        <div class="card-body table-responsive p-0">
+            <table class="table table-hover text-nowrap">
+                <thead>
+                    <tr>
+                        <th>Size</th>
+                        <th>Reported Lost</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (!Model.Any())
+                    {
+                        <tr>
+                            <td style="font-size:18px">This flight did not include traveling with a baggage piece!</td>
+                        </tr>
+                    }
+                    else
+                    {
+                        @foreach (var baggage in Model)
+                        {
+                            <tr>
+                                <td>@baggage.Size</td>
+                                <td>@baggage.IsReportedLost</td>
+                                <td>
+                                    <form>
+                                        <button type="submit" asp-action="ReportLost" asp-controller="Baggage" asp-route-id="@baggage.BaggageId" formmethod="post" class="btn btn-primary">Book</button>
+                                    </form>
+
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="alert alert-info alert-dismissible">
+            Upon reporting a baggage piece as lost, we will review your case and getback to you within 48 hours.
+        </div>
+    </div>
+
+</div>

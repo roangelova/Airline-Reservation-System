@@ -55,6 +55,17 @@ namespace AirlineReservationSystem.Controllers
                 return View("CustomError");
             }
         }
+
+        public async Task<IActionResult> ReportLostBaggage(string id)
+        {
+            var user = await userManager.GetUserAsync(this.User);
+            var currentUserId = await userManager.GetUserIdAsync(user);
+            var PassengerId = await passengerService.GetPassengerId(currentUserId);
+
+            var UserBaggages = await baggageService.GetBaggagesForBooking(id, PassengerId);
+
+            return View(UserBaggages);
+        }
        
     }
 }

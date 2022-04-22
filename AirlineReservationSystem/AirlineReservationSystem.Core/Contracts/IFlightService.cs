@@ -5,6 +5,7 @@ namespace AirlineReservationSystem.Core.Contracts
 {
     public interface IFlightService
     {
+        
         Task<bool> AddFlight(AddFlightVM model);
 
         Task<IEnumerable<AvailableFlightsVM>> GetAllAvailableFlights();

@@ -75,11 +75,13 @@ namespace AirlineReservationSystem.Core.Services
                     DepartureDestination = x.Flight.To.City,
                     ArrivalDestination = x.Flight.From.City,
                     DateAndTime = x.Flight.FlightInformation.ToString(),
-                    FlightId = x.FlightId
+                    BookingId = x.BookingNumber
                 })
                 .ToListAsync();
 
             return UserFlights;
         }
+
+        
     }
 }

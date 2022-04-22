@@ -75,9 +75,15 @@ namespace AirlineReservationSystem.Controllers
         }
 
 
-        public IActionResult GetArchivePastFlights()
+        public async Task<IActionResult> GetArchivePastFlights()
         {
-            return View();
+            var user = await userManager.GetUserAsync(this.User);
+            var currentUserId = await userManager.GetUserIdAsync(user);
+            var PassengerId = await passengerService.GetPassengerId(currentUserId);
+
+            var pastUserFlights = await bookingService.GetPastUserFlights(PassengerId);
+
+            return View(pastUserFlights);
         }
 
     }

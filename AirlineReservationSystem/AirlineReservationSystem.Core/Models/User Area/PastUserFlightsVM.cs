@@ -13,6 +13,6 @@ namespace AirlineReservationSystem.Core.Models.User_Area
 
         public string DateAndTime { get; set; }
 
-        public string FlightId { get; set; }
+        public string BookingId { get; set; }
     }
 }

@@ -71,7 +71,6 @@ namespace AirlineReservationSystem.Areas.Admin.Controllers
         {
             await flightService.AddFlight(model);
 
-            //TODO: test once url images is added to aircraft model
             return RedirectToAction("Home");
 
         }

@@ -22,7 +22,6 @@ namespace AirlineReservationSystem.Areas.Admin.Controllers
         {
             var currentFleet = await service.GetAllAircraft();
 
-            //TODO: show all available aircraft
             return View(currentFleet);
         }
 
@@ -36,8 +35,6 @@ namespace AirlineReservationSystem.Areas.Admin.Controllers
         public async Task<IActionResult> AddAircraft(AddAircraftVM addAircraftVM)
         {
             var addedSuccessfully = await service.AddAircraft(addAircraftVM);
-
-            //TODO: test once url images is added to aircraft model
 
             if (addedSuccessfully)
             {

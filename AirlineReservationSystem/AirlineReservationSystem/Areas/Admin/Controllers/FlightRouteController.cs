@@ -32,8 +32,6 @@ namespace AirlineReservationSystem.Areas.Admin.Controllers
         {
             await service.AddFlightRoute(flightRouteVM);
 
-            //TODO: REDIRECT TO WHERE??
-
             return RedirectToAction("Home");
 
         }

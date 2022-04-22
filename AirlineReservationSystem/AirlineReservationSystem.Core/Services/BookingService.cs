@@ -60,19 +60,26 @@ namespace AirlineReservationSystem.Core.Services
             return removedSuccessfully;
         }
 
-        public async Task<IEnumerable<AvailableFlightsVM>> GetAllAvailableFlights()
+
+        public async Task<IEnumerable<PastUserFlightsVM>> GetPastUserFlights(string PassengerID)
         {
-            return await repo.All<Flight>()
+            var currentDate = DateTime.Now.Date;
+
+           var UserFlights = await repo.All<Booking>()
+                .Where(x => x.PassengerId == PassengerID)
+                .Include(x => x.Flight)
+                .Where(x=> x.Flight.FlightInformation.Date < currentDate)
                 .Select(x =>
-                new AvailableFlightsVM
+                new PastUserFlightsVM
                 {
-                    DepartureDestination = x.To.City,
-                    ArrivalDestination = x.From.City,
-                    DateAndTime = x.FlightInformation.ToString(),
-                    Price = x.StandardTicketPrice.ToString(),
+                    DepartureDestination = x.Flight.To.City,
+                    ArrivalDestination = x.Flight.From.City,
+                    DateAndTime = x.Flight.FlightInformation.ToString(),
                     FlightId = x.FlightId
                 })
                 .ToListAsync();
+
+            return UserFlights;
         }
     }
 }

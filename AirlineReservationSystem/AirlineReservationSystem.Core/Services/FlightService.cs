@@ -1,8 +1,10 @@
 ﻿using AirlineReservationSystem.Core.Contracts;
 using AirlineReservationSystem.Core.Models.AdminArea.Flight;
 using AirlineReservationSystem.Core.Models.User_Area;
+using AirlineReservationSystem.Infrastructure;
 using AirlineReservationSystem.Infrastructure.Models;
 using AirlineReservationSystem.Infrastructure.Repositories;
+using Microsoft.EntityFrameworkCore;
 using System.Globalization;
 
 namespace AirlineReservationSystem.Core.Services
@@ -47,7 +49,7 @@ namespace AirlineReservationSystem.Core.Services
         public async Task<IEnumerable<AvailableFlightsVM>> GetAllAvailableFlights()
         {
             return await repo.All<Flight>()
-                .Where(f => f.isAvailable == true)
+                .Where(f => f.isAvailable == true && f.FlightStatus == Status.Scheduled)
                 .Select(x =>
                 new AvailableFlightsVM
                 {

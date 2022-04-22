@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirlineReservationSystem", "AirlineReservationSystem\AirlineReservationSystem.csproj", "{E9A71B30-1F3E-4114-A83B-C6E7D3DB47D5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AirlineReservationSystem", "AirlineReservationSystem\AirlineReservationSystem.csproj", "{E9A71B30-1F3E-4114-A83B-C6E7D3DB47D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirlineReservationSystem.Core", "AirlineReservationSystem.Core\AirlineReservationSystem.Core.csproj", "{125A55B4-3B7C-44C2-A96D-627D6BE73525}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AirlineReservationSystem.Core", "AirlineReservationSystem.Core\AirlineReservationSystem.Core.csproj", "{125A55B4-3B7C-44C2-A96D-627D6BE73525}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirlineReservationSystem.Infrastructure", "AirlineReservationSystem.Infrastructure\AirlineReservationSystem.Infrastructure.csproj", "{6022C23D-7B40-49C8-B886-DC20F24AD202}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AirlineReservationSystem.Infrastructure", "AirlineReservationSystem.Infrastructure\AirlineReservationSystem.Infrastructure.csproj", "{6022C23D-7B40-49C8-B886-DC20F24AD202}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AirlineReservationSystem.Test", "AirlineReservationSystem.Test\AirlineReservationSystem.Test.csproj", "{4ABB2241-FEFC-4F1B-853A-BB4F91729F15}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{6022C23D-7B40-49C8-B886-DC20F24AD202}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6022C23D-7B40-49C8-B886-DC20F24AD202}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6022C23D-7B40-49C8-B886-DC20F24AD202}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4ABB2241-FEFC-4F1B-853A-BB4F91729F15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4ABB2241-FEFC-4F1B-853A-BB4F91729F15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4ABB2241-FEFC-4F1B-853A-BB4F91729F15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4ABB2241-FEFC-4F1B-853A-BB4F91729F15}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

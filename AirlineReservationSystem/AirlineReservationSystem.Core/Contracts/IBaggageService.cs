@@ -8,6 +8,7 @@ namespace AirlineReservationSystem.Core.Contracts
         Task<IEnumerable<ReportLostBaggageVM>> GetBaggagesForBooking(string BookingId, string PassengerId);
 
         Task<bool> AddBaggageToBoooking (string BookingId, string PassengerID, AddBaggageVM model);
+        Task<bool> ReportAsLost (string BaggageId);
 
     }
 }

@@ -64,5 +64,24 @@ namespace AirlineReservationSystem.Core.Services
                 })
                 .ToListAsync(); 
         }
+
+        public async Task<bool> ReportAsLost(string BaggageId)
+        {
+            bool reportedSuccessfully = false;
+
+            try
+            {
+                var baggage = await repo.GetByIdAsync<Baggage>(BaggageId);
+                baggage.IsReportedLost = true;
+                await repo.SaveChangesAsync();
+                reportedSuccessfully = true;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+            return reportedSuccessfully;
+        }
     }
 }

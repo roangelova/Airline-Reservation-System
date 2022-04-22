@@ -56,7 +56,8 @@ namespace AirlineReservationSystem.Controllers
             }
         }
 
-        public async Task<IActionResult> ReportLostBaggage(string id)
+        [HttpGet]
+        public async Task<IActionResult> GetReportLostBaggage(string id)
         {
             var user = await userManager.GetUserAsync(this.User);
             var currentUserId = await userManager.GetUserIdAsync(user);
@@ -66,6 +67,21 @@ namespace AirlineReservationSystem.Controllers
 
             return View(UserBaggages);
         }
-       
+
+        [HttpPost]
+        public async Task<IActionResult> ReportLostBaggage(string id)
+        {
+            var result = await baggageService.ReportAsLost(id);
+
+            if (result)
+            {
+                return RedirectToAction("ReportLostBaggage");
+            }
+            else
+            {
+                return View("CustomError");
+            }
+        }
+
     }
 }

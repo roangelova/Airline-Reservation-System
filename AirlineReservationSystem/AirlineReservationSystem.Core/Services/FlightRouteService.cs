@@ -63,11 +63,9 @@ namespace AirlineReservationSystem.Core.Services
         {
             bool removedSuccessfully = false;
 
-            var RouteToRemove = await repo.GetByIdAsync<FlightRoute>(id);
-
             try
             {
-                await repo.DeleteAsync<FlightRoute>(RouteToRemove);
+                await repo.DeleteAsync<FlightRoute>(id);
                 await repo.SaveChangesAsync();
                 removedSuccessfully = true;
             }

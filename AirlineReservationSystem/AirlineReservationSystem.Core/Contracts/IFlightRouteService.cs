@@ -6,6 +6,8 @@ namespace AirlineReservationSystem.Core.Contracts
     {
         Task<bool> AddFlightRoute(AddFlightRouteVM model);
 
-        Task<IEnumerable<ListFlightRouteVM>> GetAllDepartureRoutes();
+        public Task<bool> CheckIfRouteInUse(string id);
+        Task<IEnumerable<ListFlightRouteVM>> GetAllRoutes();
+        Task<bool> RemoveRoute(string id);
     }
 }

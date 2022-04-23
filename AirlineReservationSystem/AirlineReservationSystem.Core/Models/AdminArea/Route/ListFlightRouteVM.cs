@@ -6,7 +6,7 @@
     {
         [Required]
         public string City { get; set; }
-
         public string Id { get; set; }
+        public string IATA { get; set; }
     }
 }

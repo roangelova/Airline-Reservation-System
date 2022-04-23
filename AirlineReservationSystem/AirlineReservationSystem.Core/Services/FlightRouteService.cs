@@ -34,15 +34,50 @@ namespace AirlineReservationSystem.Core.Services
 
         }
 
-        public async Task<IEnumerable<ListFlightRouteVM>> GetAllDepartureRoutes()
+        public async Task<IEnumerable<ListFlightRouteVM>> GetAllRoutes()
         {
             return await repo.All<FlightRoute>()
                  .Select(f => new ListFlightRouteVM
                  {
                      City = f.City,
-                     Id = f.RouteId
+                     Id = f.RouteId,
+                     IATA= f.IATA.ToUpper(),
                  })
                  .ToListAsync();
+        }
+
+        public async Task<bool> CheckIfRouteInUse(string id)
+        {
+            var FlightsInRoute = await repo.All<Flight>()
+                .Where(x => x.FromId == id || x.ToId == id)
+                .ToListAsync();
+
+            if (FlightsInRoute.Any())
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public async Task<bool> RemoveRoute(string id)
+        {
+            bool removedSuccessfully = false;
+
+            var RouteToRemove = await repo.GetByIdAsync<FlightRoute>(id);
+
+            try
+            {
+                await repo.DeleteAsync<FlightRoute>(RouteToRemove);
+                await repo.SaveChangesAsync();
+                removedSuccessfully = true;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return removedSuccessfully;
         }
     }
 }

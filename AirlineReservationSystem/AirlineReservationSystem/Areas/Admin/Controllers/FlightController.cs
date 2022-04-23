@@ -36,7 +36,7 @@ namespace AirlineReservationSystem.Areas.Admin.Controllers
         public async Task<IActionResult> AddFlight()
         {
            var availableAircrfats = await AircraftService.GetAllAircraft();
-           var availableDepartures = await FlightRouteService.GetAllDepartureRoutes();
+           var availableDepartures = await FlightRouteService.GetAllRoutes();
            
            
            

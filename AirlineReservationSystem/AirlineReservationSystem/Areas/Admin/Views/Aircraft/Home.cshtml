@@ -5,25 +5,27 @@
     ViewData["Title"] = "Fleet Management";
 }
 <section>
-<h1>Please choose an action: </h1>
-<div style="justify-content:center">
-<a asp-area="admin" asp-action="AddAircraft" asp-controller="aircraft" type="button" class="buttons-div" class="btn btn-block bg-gradient-secondary btn-lg">Add an Aircraft</a>
-<a asp-area="admin" asp-action="RemoveAircraft" asp-controller="aircraft" type="button"  class="buttons-div" class="btn btn-block bg-gradient-secondary btn-lg">Remove an Aircraft</a>
-</div>
+    <h1>Please choose an action: </h1>
+    <div style="justify-content:center">
+        <a asp-area="admin" asp-action="AddAircraft" asp-controller="aircraft" type="button" class="buttons-div" class="btn btn-block bg-gradient-secondary btn-lg">Add an Aircraft</a>
+        <a asp-area="admin" asp-action="RemoveAircraft" asp-controller="aircraft" type="button" class="buttons-div" class="btn btn-block bg-gradient-secondary btn-lg">Remove an Aircraft</a>
+    </div>
 </section>
-<br/>
+<br />
 
 <section>
-<h1> Current aircrafts in fleet: </h1> 
-<br/>
-<br/>
-@foreach (var aircraft in Model)
-{
-<div class="aircraft-board">
-                    <h2 style="font-size:18px" class="AircraftManufacturer">Manufacturer: @aircraft.Manufacturer</h2>
-                    <h2 style="font-size:18px" class="aircraftModel">Aircraft Model: @aircraft.AircraftModel</h2>
-                    <h2 style="font-size:18px" class="aircraftCapacity">Capacity: @aircraft.Capacity</h2>
-                    <img class="aircraft-picture" src=@aircraft.ImageUrl><img>
- </div>
-}
+    <h1> Current aircrafts in fleet: </h1>
+    <br />
+    <br />
+    <div class="aircraft-div">
+        @foreach (var aircraft in Model)
+        {
+            <div class="section">
+                <h2 style="font-size:18px">Manufacturer: @aircraft.Manufacturer</h2>
+                <h2 style="font-size:18px">Aircraft Model: @aircraft.AircraftModel</h2>
+                <h2 style="font-size:18px">Capacity: @aircraft.Capacity</h2>
+                <img class="aircraft-picture" src=@aircraft.ImageUrl><img>
+            </div>
+        }
+    </div>
 </section>

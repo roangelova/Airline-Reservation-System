@@ -33,6 +33,7 @@ namespace AirlineReservationSystem.Core.Services
             {
                 await repo.AddAsync(aircraft);
                 await repo.SaveChangesAsync();
+                addedSuccessfully = true;
             }
             catch (Exception)
             {

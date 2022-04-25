@@ -25,16 +25,17 @@ namespace AirlineReservationSystem.Core.Services
         {
             bool addedSuccessfully = false;
 
-            model.FlightInformation = model.FlightInformation.Replace('T', ' ');
+            model.FlightInformation = model.FlightInformation.Replace('T',' ');
+            var culture = CultureInfo.CreateSpecificCulture("de-DE");
 
             var flight = new Flight()
             {
                 AircraftID = model.Aircraft,
-                FlightInformation = DateTime.ParseExact(model.FlightInformation, "g", CultureInfo.InvariantCulture),
+                FlightInformation = DateTime.ParseExact(model.FlightInformation, "yyyy-MM-dd HH:mm", culture),
                 FlightStatus = Infrastructure.Status.Scheduled,
                 FromId = model.DepartureCity,
                 ToId = model.ArrivalCity,
-                StandardTicketPrice = decimal.Parse(model.StandardTicketPrice, CultureInfo.InvariantCulture),
+                StandardTicketPrice = decimal.Parse(model.StandardTicketPrice, CultureInfo.CurrentCulture),
 
             };
 

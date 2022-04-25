@@ -22,7 +22,7 @@ namespace AirlineReservationSystem.Infrastructure.Models
         public FlightRoute To { get; set; }
 
         [Required]
-        [Column(TypeName = "date")]
+        [Column(TypeName = "datetime")]
         public DateTime FlightInformation { get; set; }
 
         public Status FlightStatus { get; set; }

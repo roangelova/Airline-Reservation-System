@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AirlineReservationSystem.Infrastructure.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AirlineReservationSystem.Controllers
@@ -6,6 +8,5 @@ namespace AirlineReservationSystem.Controllers
     [Authorize]
     public class BaseController : Controller
     {
-
     }
 }

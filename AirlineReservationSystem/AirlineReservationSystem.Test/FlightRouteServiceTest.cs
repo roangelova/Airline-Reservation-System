@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace AirlineReservationSystem.Test
 {
-    public class Tests
+    public class FlightRouteServiceTest
     {
         private ServiceProvider serviceProvider;
         private InMemoryDbContext dbContext;
@@ -80,9 +80,8 @@ namespace AirlineReservationSystem.Test
 
             await SeedDbAsync(repo);
 
-            var routes = await service.GetAllRoutes();
-
-            Assert.That(routes, Has.Count.EqualTo(2));
+            var routes = await repo.All<Flight>().ToListAsync();
+            Assert.That(routes.Count.Equals(2));
 
         }
 
@@ -130,9 +129,9 @@ namespace AirlineReservationSystem.Test
                 .FirstOrDefaultAsync(x => x.City == "Munich");
 
            Assert.DoesNotThrowAsync(async () => await service.RemoveRoute(MUCRoute.RouteId));
-            var routes = await service.GetAllRoutes();
 
-            Assert.That(routes, Has.Count.EqualTo(2));
+            var routes = await repo.All<FlightRoute>().ToListAsync();
+            Assert.That(routes.Count.Equals(2));
         }
 
         private async Task SeedDbAsync(IApplicatioDbRepository repo)

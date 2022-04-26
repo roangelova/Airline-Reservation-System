@@ -24,15 +24,24 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var flight in Model)
+                        @if (!Model.Any())
                         {
                             <tr>
-                                <td>@flight.DepartureDestination</td>
-                                <td>@flight.ArrivalDestination</td>
-                                <td>@flight.DateAndTime</td>
-                                <td>@flight.Price</td>
-                                <td><button type="submit" formmethod="post" asp-action="book" asp-controller="booking" asp-route-id="@flight.FlightId" class="btn btn-primary">Book</button></td>
+                                <td style="font-size:18px">Currently there are no available flights!</td>
                             </tr>
+                        }
+                        else
+                        {
+                            @foreach (var flight in Model)
+                            {
+                                <tr>
+                                    <td>@flight.DepartureDestination</td>
+                                    <td>@flight.ArrivalDestination</td>
+                                    <td>@flight.DateAndTime</td>
+                                    <td>@flight.Price</td>
+                                    <td><button type="submit" formmethod="post" asp-action="book" asp-controller="booking" asp-route-id="@flight.FlightId" class="btn btn-primary">Book</button></td>
+                                </tr>
+                            }
                         }
                     </tbody>
                 </table>

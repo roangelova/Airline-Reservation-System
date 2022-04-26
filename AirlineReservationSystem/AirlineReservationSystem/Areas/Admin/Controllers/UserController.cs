@@ -39,7 +39,6 @@ namespace AirlineReservationSystem.Areas.Admin.Controllers
 
         public async Task<IActionResult> ManageUsers()
         {
-
             var users = await userService.GetUsers();
 
             return View(users);

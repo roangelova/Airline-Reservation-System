@@ -10,17 +10,17 @@ namespace AirlineReservationSystem.Controllers
     public class BaggageController : BaseController
     {
         private readonly IBaggageService baggageService;
-        private readonly UserManager<ApplicationUser> userManager;
         private readonly IPassengerService passengerService;
+        UserManager<ApplicationUser> userManager;
 
         public BaggageController(
             IBaggageService _baggageService,
-            UserManager<ApplicationUser> _userManager,
-            IPassengerService _passengerService)
+            IPassengerService _passengerService,
+            UserManager<ApplicationUser> _userManager) : base(_userManager)
         {
             baggageService = _baggageService;
-            userManager = _userManager;
             passengerService = _passengerService;
+            userManager = _userManager;
         }
         public IActionResult AddBaggage()
         {
@@ -40,8 +40,7 @@ namespace AirlineReservationSystem.Controllers
         [HttpPost]
         public async Task<IActionResult> AddBaggage(string id, AddBaggageVM model)
         {
-            var user = await userManager.GetUserAsync(this.User);
-            var currentUserId = await userManager.GetUserIdAsync(user);
+            var currentUserId = await GetUserIdAsync();
             var PassengerId = await passengerService.GetPassengerId(currentUserId);
 
             bool success = await baggageService.AddBaggageToBoooking(id, PassengerId, model);
@@ -59,8 +58,7 @@ namespace AirlineReservationSystem.Controllers
         [HttpGet]
         public async Task<IActionResult> GetReportLostBaggage(string id)
         {
-            var user = await userManager.GetUserAsync(this.User);
-            var currentUserId = await userManager.GetUserIdAsync(user);
+            var currentUserId = await GetUserIdAsync();
             var PassengerId = await passengerService.GetPassengerId(currentUserId);
 
             var UserBaggages = await baggageService.GetBaggagesForBooking(id, PassengerId);

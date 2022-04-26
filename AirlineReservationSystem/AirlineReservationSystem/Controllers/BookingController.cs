@@ -16,7 +16,7 @@ namespace AirlineReservationSystem.Controllers
             IFlightService _flightService,
             UserManager<ApplicationUser> _userManager,
             IPassengerService _passengerService,
-            IBookingService _bookingService)
+            IBookingService _bookingService) : base(_userManager)
             
         {
             flightService = _flightService;
@@ -36,8 +36,7 @@ namespace AirlineReservationSystem.Controllers
         [HttpPost]
         public async Task<IActionResult> Book(string id)
         {
-            var user = await userManager.GetUserAsync(this.User);
-            var currentUserId = await userManager.GetUserIdAsync(user);
+            var currentUserId = await GetUserIdAsync();
             var PassengerId = await passengerService.GetPassengerId(currentUserId);
 
             if (PassengerId is null)
@@ -77,8 +76,7 @@ namespace AirlineReservationSystem.Controllers
 
         public async Task<IActionResult> GetArchivePastFlights()
         {
-            var user = await userManager.GetUserAsync(this.User);
-            var currentUserId = await userManager.GetUserIdAsync(user);
+            var currentUserId = await GetUserIdAsync();
             var PassengerId = await passengerService.GetPassengerId(currentUserId);
 
             var pastUserFlights = await bookingService.GetPastUserFlights(PassengerId);

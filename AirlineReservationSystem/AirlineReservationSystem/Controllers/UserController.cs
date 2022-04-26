@@ -4,24 +4,20 @@ using AirlineReservationSystem.Infrastructure.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace AirlineReservationSystem.Controllers
 {
-    public class UserController : BaseController
+    public class UserController : Controller
     {
         private readonly RoleManager<IdentityRole> roleManager;
-
-        private readonly UserManager<ApplicationUser> userManager;
-
         private readonly IUserService userService;
 
         public UserController(
             RoleManager<IdentityRole> _roleManager,
-            UserManager<ApplicationUser> _userManager,
-            IUserService _userService)
+            IUserService _userService) 
         {
             roleManager = _roleManager;
-            userManager = _userManager;
             userService = _userService;
         }
         public IActionResult Index()
@@ -41,8 +37,6 @@ namespace AirlineReservationSystem.Controllers
         
         }
 
-        //TODO: CREATE ROLO
-        //TODO: DELETE WHEN DONE
         public async Task<IActionResult> CreateRole()
         {
            // await roleManager.CreateAsync(new IdentityRole()
@@ -62,5 +56,6 @@ namespace AirlineReservationSystem.Controllers
 
             return Ok();
         }
+
     }
 }

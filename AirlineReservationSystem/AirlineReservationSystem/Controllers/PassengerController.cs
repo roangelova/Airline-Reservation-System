@@ -14,7 +14,7 @@ namespace AirlineReservationSystem.Controllers
 
         public PassengerController(
             IPassengerService _passengerService, IUserService _userService,
-           UserManager<ApplicationUser> _userManager)
+           UserManager<ApplicationUser> _userManager) :base(_userManager)
         {
             passengerService = _passengerService;
             userService = _userService;
@@ -32,9 +32,7 @@ namespace AirlineReservationSystem.Controllers
 
         public async Task<IActionResult> MyBookings()
         {
-            var user = await userManager.GetUserAsync(this.User);
-            var currentUserId = await userManager.GetUserIdAsync(user);
-
+            var currentUserId = await GetUserIdAsync();
             var passengerId = await passengerService.GetPassengerId(currentUserId);
 
             var userBookings = await passengerService.GetUserBookings(passengerId);
@@ -48,9 +46,7 @@ namespace AirlineReservationSystem.Controllers
         /// </summary>
         public async Task<IActionResult> EditPassengerData()
         {
-            var user = await userManager.GetUserAsync(this.User);
-            var currentUserId = await userManager.GetUserIdAsync(user);
-
+            var currentUserId = await GetUserIdAsync();
             var PassengerId = passengerService.GetPassengerId(currentUserId);
 
             if (PassengerId != null)
@@ -75,9 +71,7 @@ namespace AirlineReservationSystem.Controllers
         [HttpPost]
         public async Task<IActionResult> EditPassengerData(EditPassengerDataVM model)
         {
-            var user = await userManager.GetUserAsync(this.User);
-            var currentUserId = await userManager.GetUserIdAsync(user);
-
+            var currentUserId = await GetUserIdAsync();
             var (registeredSuccessfully, passengerId) = await passengerService.RegisterPassenger(model);
 
             if (passengerId != "")

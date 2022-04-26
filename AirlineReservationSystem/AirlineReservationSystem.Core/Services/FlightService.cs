@@ -21,6 +21,9 @@ namespace AirlineReservationSystem.Core.Services
             repo = _repo;
         }
 
+        /// <summary>
+        /// Created a new flight and adds it to the db.
+        /// </summary>
         public async Task<bool> AddFlight(AddFlightVM model)
         {
             bool addedSuccessfully = false;
@@ -53,6 +56,9 @@ namespace AirlineReservationSystem.Core.Services
             return addedSuccessfully;
         }
 
+        /// <summary>
+        /// Gets the flights by the given Id and sets the Flight status to canceled
+        /// </summary>
         public async Task<bool> CancelFlight(string FlightId)
         {
             bool canceled = false;
@@ -72,6 +78,9 @@ namespace AirlineReservationSystem.Core.Services
             return canceled;
         }
 
+        /// <summary>
+        /// Gets all available flights such as non-canceled and where there is still capacity on the aircraft
+        /// </summary>
         public async Task<IEnumerable<AvailableFlightsVM>> GetAllAvailableFlights()
         {
             var flights = await repo.All<Flight>()
@@ -96,6 +105,10 @@ namespace AirlineReservationSystem.Core.Services
             bookingPerFlight.Where(f => f.FlightId == x.FlightId).ToList().Count());   
         }
 
+        /// <summary>
+        /// Returns all flights that are not yet canceled and are later passed to the CancelFlight View.
+        /// Also lists the number of bookings for each flight in order to assist the fleet manager in his decision
+        /// </summary>
         public async Task<IEnumerable<FlightsForCancellationVM>> GetFlightsForCancellation()
         {
             var bookingsCount = await repo.All<Booking>()

@@ -16,7 +16,9 @@ namespace AirlineReservationSystem.Core.Services
         }
 
 
-
+        /// <summary>
+        /// Adds a new flight route and makes sure the IATA code is always upper case as per standard
+        /// </summary>
         public async Task<bool> AddFlightRoute(AddFlightRouteVM model)
         {
             bool addedSuccessfully = false;
@@ -42,6 +44,9 @@ namespace AirlineReservationSystem.Core.Services
             return addedSuccessfully;
         }
 
+        /// <summary>
+        /// Gets all available flight routes 
+        /// </summary>
         public async Task<IEnumerable<ListFlightRouteVM>> GetAllRoutes()
         {
             return await repo.All<FlightRoute>()
@@ -49,15 +54,20 @@ namespace AirlineReservationSystem.Core.Services
                  {
                      City = f.City,
                      Id = f.RouteId,
-                     IATA = f.IATA.ToUpper(),
+                     IATA = f.IATA,
                  })
                  .ToListAsync();
         }
 
+        /// <summary>
+        /// Checks for the given flight route Id if it's currently in use (in a scheduled flight)
+        /// and returns bool. 
+        /// </summary>
         public async Task<bool> CheckIfRouteInUse(string id)
         {
             var FlightsInRoute = await repo.All<Flight>()
                 .Where(x => x.FromId == id || x.ToId == id)
+                .Where(x => x.FlightStatus == Infrastructure.Status.Scheduled)
                 .ToListAsync();
 
             if (FlightsInRoute.Any())
@@ -67,6 +77,9 @@ namespace AirlineReservationSystem.Core.Services
             return false;
         }
 
+        /// <summary>
+        /// Removes a flight route by the given id
+        /// </summary>
         public async Task<bool> RemoveRoute(string id)
         {
             bool removedSuccessfully = false;

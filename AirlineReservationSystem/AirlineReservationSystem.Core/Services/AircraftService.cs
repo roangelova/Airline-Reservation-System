@@ -15,6 +15,9 @@ namespace AirlineReservationSystem.Core.Services
             repo = _repo;
         }
 
+        /// <summary>
+        /// Adds a new aircraft to the database and returns bool whether the operation was successful
+        /// </summary>
         public async Task<bool> AddAircraft(AddAircraftVM model)
         {
 
@@ -44,6 +47,10 @@ namespace AirlineReservationSystem.Core.Services
 
         }
 
+        /// <summary>
+        /// Gets all available aircraft in the data base. Currently only used for visualization purposes in admin
+        /// area
+        /// </summary>
         public async Task<IEnumerable<AddAircraftVM>> GetAllAircraft()
         {
             return await repo.All<Aircraft>()

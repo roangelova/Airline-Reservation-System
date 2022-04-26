@@ -24,6 +24,10 @@ namespace AirlineReservationSystem.Core.Services
             return user.PassengerId;
         }
 
+        /// <summary>
+        /// Gets the bookings for the user with given Passenger Id. Also includes canceled bookings and baggage
+        /// pieces count.
+        /// </summary>
         public async Task<IEnumerable<MyBookingsVM>> GetUserBookings(string id)
         {
             var BaggageCount = await repo.All<Baggage>()
@@ -50,6 +54,8 @@ namespace AirlineReservationSystem.Core.Services
 
         }
 
+        //Register a passenger for the user with the given id. Returns the Id, which is later used to set/match
+        //the Passenger Id in the User 
         public async Task<(bool result, string passengerId)> RegisterPassenger(EditPassengerDataVM model)
         {
             var addedSuccessfully = false;

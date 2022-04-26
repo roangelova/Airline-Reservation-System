@@ -32,6 +32,10 @@ namespace AirlineReservationSystem.Controllers
             return View(flights);
         }
 
+        /// <summary>
+        /// Checks if the user is already registered as a passenger, as only then a user can book a flight. If yes, 
+        /// the flight is booked and the user redirected to his bookings view. 
+        /// </summary>
 
         [HttpPost]
         public async Task<IActionResult> Book(string id)

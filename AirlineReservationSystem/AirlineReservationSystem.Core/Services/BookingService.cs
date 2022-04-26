@@ -15,6 +15,9 @@ namespace AirlineReservationSystem.Core.Services
             repo = _repo;
         }
 
+        /// <summary>
+        /// Created a new booking for the given passenger and Flight Id. By default status is scheduled
+        /// </summary>
         public async Task<bool> BookPassengerFlight(string FlightId, string PassengerId)
         {
             bool bookedSuccessfully = false;
@@ -40,6 +43,9 @@ namespace AirlineReservationSystem.Core.Services
             return bookedSuccessfully;
         }
 
+        /// <summary>
+        /// Cancels the user booking with the given Id
+        /// </summary>
         public async Task<bool> CancelBooking(string BookingId)
         {
             bool removedSuccessfully = false;
@@ -58,7 +64,9 @@ namespace AirlineReservationSystem.Core.Services
             return removedSuccessfully;
         }
 
-
+        /// <summary>
+        /// Gets an archive of the user flights before current date. 
+        /// </summary>
         public async Task<IEnumerable<PastUserFlightsVM>> GetPastUserFlights(string PassengerID)
         {
             var currentDate = DateTime.Now.Date;

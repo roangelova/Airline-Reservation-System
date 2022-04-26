@@ -15,6 +15,10 @@ namespace AirlineReservationSystem.Core.Services
         {
             repo = _repo;
         }
+
+        /// <summary>
+        /// Gets the chosen from user baggage size, created a new model and adds it to the chosen booking.
+        /// </summary>
         public async Task<bool> AddBaggageToBoooking(string BookingId, string PassengerId, AddBaggageVM model)
         {
             bool addedSuccessfully = false;
@@ -43,6 +47,9 @@ namespace AirlineReservationSystem.Core.Services
             return addedSuccessfully;
         }
 
+        /// <summary>
+        /// Gets the enum of available baggage sizes
+        /// </summary>
         public IEnumerable<AddBaggageVM> GetAvailableBaggageSizes()
         {
             var availableSizes = Enum.GetValues<BaggageSize>()
@@ -52,6 +59,9 @@ namespace AirlineReservationSystem.Core.Services
             return availableSizes;
         }
 
+        /// <summary>
+        /// Gets all the baggage pieced for the given Booking and Passenger ID
+        /// </summary>
         public async Task<IEnumerable<ReportLostBaggageVM>> GetBaggagesForBooking(string BookingId, string PassengerId)
         {
             return await repo.All<Baggage>()
@@ -66,6 +76,9 @@ namespace AirlineReservationSystem.Core.Services
                 .ToListAsync();
         }
 
+        /// <summary>
+        /// Sets IsReportedLost prop of the given BaggageId piece to true
+        /// </summary>
         public async Task<bool> ReportAsLost(string BaggageId)
         {
             bool reportedSuccessfully = false;

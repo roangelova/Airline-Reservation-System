@@ -50,6 +50,9 @@ namespace AirlineReservationSystem.Core.Services
                 .ToListAsync();
         }
 
+        /// <summary>
+        /// Once a passenger is created by the PassengerService, this method sets the Passenger Id in the User as well
+        /// </summary>
         public async Task<bool> SetPassengerId(string userId, string PassengerId)
         {
             bool addedSuccessfully = false;

@@ -39,7 +39,7 @@ namespace AirlineReservationSystem.Infrastructure.Models
 
         public int Capacity => this.Aircraft.Capacity;
 
-        public bool isAvailable => this.Capacity - Bookings.Count > 0;
+       // public bool isAvailable => this.Capacity - Bookings.Count > 0;
 
         public List<Booking> Bookings = new List<Booking>();
 

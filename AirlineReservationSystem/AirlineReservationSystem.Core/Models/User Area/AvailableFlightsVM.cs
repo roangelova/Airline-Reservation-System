@@ -10,5 +10,6 @@
         public string DateAndTime { get; set; }
 
         public string FlightId { get; set; }
+        public int Capacity { get; set; }
     }
 }

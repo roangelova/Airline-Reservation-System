@@ -74,7 +74,8 @@ namespace AirlineReservationSystem.Core.Services
 
         public async Task<IEnumerable<AvailableFlightsVM>> GetAllAvailableFlights()
         {
-            return await repo.All<Flight>()
+            var flights = await repo.All<Flight>()
+                .Include(f => f.Aircraft)
                 .Where(f => f.FlightStatus == Status.Scheduled)
                 .Select(x =>
                 new AvailableFlightsVM
@@ -83,9 +84,16 @@ namespace AirlineReservationSystem.Core.Services
                     ArrivalDestination = x.From.City,
                     DateAndTime = x.FlightInformation.ToString(),
                     Price = x.StandardTicketPrice.ToString(),
-                    FlightId = x.FlightId
+                    FlightId = x.FlightId,
+                    Capacity = x.Capacity
+
                 })
                 .ToListAsync();
+
+            var bookingPerFlight = await repo.All<Booking>().ToListAsync();
+
+           return flights.Where(x => x.Capacity >
+            bookingPerFlight.Where(f => f.FlightId == x.FlightId).ToList().Count());   
         }
 
         public async Task<IEnumerable<FlightsForCancellationVM>> GetFlightsForCancellation()

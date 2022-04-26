@@ -55,17 +55,17 @@ namespace AirlineReservationSystem.Core.Services
             var addedSuccessfully = false;
             var passengerId = "";
 
-            var passenger = new Passenger()
-            {
-                DOB = DateTime.Parse(model.DateOfBirth),
-                Nationality = model.Nationality,
-                FirstName = model.FirstName,
-                LastName = model.LastName,
-                DocumentNumber = model.DocumentId
-            };
-
             try
             {
+                var passenger = new Passenger()
+                {
+                    DOB = DateTime.Parse(model.DateOfBirth),
+                    Nationality = model.Nationality,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    DocumentNumber = model.DocumentId
+                };
+
                 await repo.AddAsync(passenger);
                 await repo.SaveChangesAsync();
 
@@ -74,6 +74,7 @@ namespace AirlineReservationSystem.Core.Services
             }
             catch (Exception)
             {
+                throw;
             }
 
             return (addedSuccessfully, passengerId);

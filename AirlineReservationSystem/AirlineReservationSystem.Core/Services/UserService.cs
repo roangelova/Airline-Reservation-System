@@ -65,27 +65,36 @@ namespace AirlineReservationSystem.Core.Services
             }
             catch (Exception)
             {
-
+                throw;
             }
-            return addedSuccessfully;
 
+            return addedSuccessfully;
         }
 
         public async Task<bool> UpdateUser(UserEditVM model)
         {
             bool result = false;
-            var user = await repo.GetByIdAsync<ApplicationUser>(model.Id);
 
-            if (user != null)
+            try
             {
-                user.FirstName = model.FirstName;
-                user.LastName = model.LastName;
-                await repo.SaveChangesAsync();
+                var user = await repo.GetByIdAsync<ApplicationUser>(model.Id);
+
+                if (user != null)
+                {
+                    user.FirstName = model.FirstName;
+                    user.LastName = model.LastName;
+                    await repo.SaveChangesAsync();
 
 
-                result = true;
+                    result = true;
+                }
+
             }
+            catch (Exception)
+            {
 
+                throw;
+            }
 
             return result;
         }

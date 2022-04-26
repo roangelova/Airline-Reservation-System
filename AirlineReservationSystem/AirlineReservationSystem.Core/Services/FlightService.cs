@@ -25,23 +25,30 @@ namespace AirlineReservationSystem.Core.Services
         {
             bool addedSuccessfully = false;
 
-            model.FlightInformation = model.FlightInformation.Replace('T',' ');
-            var culture = CultureInfo.CreateSpecificCulture("de-DE");
-
-            var flight = new Flight()
+            try
             {
-                AircraftID = model.Aircraft,
-                FlightInformation = DateTime.ParseExact(model.FlightInformation, "yyyy-MM-dd HH:mm", culture),
-                FlightStatus = Infrastructure.Status.Scheduled,
-                FromId = model.DepartureCity,
-                ToId = model.ArrivalCity,
-                StandardTicketPrice = decimal.Parse(model.StandardTicketPrice, CultureInfo.CurrentCulture),
+                model.FlightInformation = model.FlightInformation.Replace('T', ' ');
+                var culture = CultureInfo.CreateSpecificCulture("de-DE");
 
-            };
+                var flight = new Flight()
+                {
+                    AircraftID = model.Aircraft,
+                    FlightInformation = DateTime.ParseExact(model.FlightInformation, "yyyy-MM-dd HH:mm", culture),
+                    FlightStatus = Infrastructure.Status.Scheduled,
+                    FromId = model.DepartureCity,
+                    ToId = model.ArrivalCity,
+                    StandardTicketPrice = decimal.Parse(model.StandardTicketPrice, CultureInfo.CurrentCulture),
 
+                };
 
-            await repo.AddAsync(flight);
-            await repo.SaveChangesAsync();
+                await repo.AddAsync(flight);
+                await repo.SaveChangesAsync();
+                addedSuccessfully = true;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
 
             return addedSuccessfully;
         }
@@ -49,17 +56,16 @@ namespace AirlineReservationSystem.Core.Services
         public async Task<bool> CancelFlight(string FlightId)
         {
             bool canceled = false;
-            var FlightToCancel = await repo.GetByIdAsync<Flight>(FlightId);
 
             try
             {
+                var FlightToCancel = await repo.GetByIdAsync<Flight>(FlightId);
                 FlightToCancel.FlightStatus = Status.Canceled;
                 await repo.SaveChangesAsync();
                 canceled = true;
             }
             catch (Exception)
             {
-
                 throw;
             }
 

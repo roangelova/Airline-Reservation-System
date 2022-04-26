@@ -35,28 +35,25 @@ namespace AirlineReservationSystem.Areas.Admin.Controllers
 
         public async Task<IActionResult> AddFlight()
         {
-           var availableAircrfats = await AircraftService.GetAllAircraft();
-           var availableDepartures = await FlightRouteService.GetAllRoutes();
-           
-           
-           
-           ViewBag.AvailableAircraft = availableAircrfats
-               .Select(a => new SelectListItem()
-               {
-                   Text = $"{a.Manufacturer} {a.AircraftModel}",
-                   Value = a.Id
-               })
-               .ToList();
-           
-           ViewBag.AvailableDepartures = availableDepartures
-               .Select(d => new SelectListItem()
-               {
-                   Text = d.City,
-                   Value = d.Id
-               })
-               .ToList();
+            var availableAircrfats = await AircraftService.GetAllAircraft();
+            var availableDepartures = await FlightRouteService.GetAllRoutes();
 
-           
+            ViewBag.AvailableAircraft = availableAircrfats
+                .Select(a => new SelectListItem()
+                {
+                    Text = $"{a.Manufacturer} {a.AircraftModel}",
+                    Value = a.Id
+                })
+                .ToList();
+
+            ViewBag.AvailableDepartures = availableDepartures
+                .Select(d => new SelectListItem()
+                {
+                    Text = d.City,
+                    Value = d.Id
+                })
+                .ToList();
+
 
             return View();
         }
@@ -64,9 +61,16 @@ namespace AirlineReservationSystem.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> AddFlight(AddFlightVM model)
         {
-            await flightService.AddFlight(model);
+            var addedSuccessfuly = await flightService.AddFlight(model);
 
-            return RedirectToAction("Home");
+            if (addedSuccessfuly)
+            {
+                return RedirectToAction("Home");
+            }
+            else
+            {
+                return View("CustomError");
+            }
 
         }
 
@@ -80,7 +84,7 @@ namespace AirlineReservationSystem.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> CancelFlight(string id)
         {
-           var result = await flightService.CancelFlight(id);
+            var result = await flightService.CancelFlight(id);
 
             if (result)
             {

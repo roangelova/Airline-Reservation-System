@@ -18,14 +18,21 @@
     <br />
     <br />
     <div class="aircraft-div">
-        @foreach (var aircraft in Model)
+        @if (!Model.Any())
         {
-            <div class="section">
-                <h2 style="font-size:18px">Manufacturer: @aircraft.Manufacturer</h2>
-                <h2 style="font-size:18px">Aircraft Model: @aircraft.AircraftModel</h2>
-                <h2 style="font-size:18px">Capacity: @aircraft.Capacity</h2>
-                <img class="aircraft-picture" src=@aircraft.ImageUrl><img>
-            </div>
+            <h2 style="font-size:18px">You have no aircrafts in yout fleet yet!</h2>
+        }
+        else
+        {
+            @foreach (var aircraft in Model)
+            {
+                <div class="section">
+                    <h2 style="font-size:18px">Manufacturer: @aircraft.Manufacturer</h2>
+                    <h2 style="font-size:18px">Aircraft Model: @aircraft.AircraftModel</h2>
+                    <h2 style="font-size:18px">Capacity: @aircraft.Capacity</h2>
+                    <img class="aircraft-picture" src=@aircraft.ImageUrl><img>
+                </div>
+            }
         }
     </div>
 </section>

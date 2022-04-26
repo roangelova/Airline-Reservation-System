@@ -37,7 +37,7 @@ namespace AirlineReservationSystem.Core.Services
             }
             catch (Exception)
             {
-
+                throw;
             }
 
             return addedSuccessfully;

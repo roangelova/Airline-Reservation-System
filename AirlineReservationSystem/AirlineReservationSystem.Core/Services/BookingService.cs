@@ -19,24 +19,22 @@ namespace AirlineReservationSystem.Core.Services
         {
             bool bookedSuccessfully = false;
 
-            var booking = new Booking()
-            {
-                FlightId = FlightId,
-                PassengerId = PassengerId,
-                BookingStatus = Infrastructure.Status.Scheduled
-            };
-
             try
             {
+                var booking = new Booking()
+                {
+                    FlightId = FlightId,
+                    PassengerId = PassengerId,
+                    BookingStatus = Infrastructure.Status.Scheduled
+                };
+
                 await repo.AddAsync<Booking>(booking);
                 await repo.SaveChangesAsync();
                 bookedSuccessfully = true;
-
-                return bookedSuccessfully;
             }
             catch (Exception)
             {
-
+                throw;
             }
 
             return bookedSuccessfully;
@@ -65,23 +63,23 @@ namespace AirlineReservationSystem.Core.Services
         {
             var currentDate = DateTime.Now.Date;
 
-           var UserFlights = await repo.All<Booking>()
-                .Where(x => x.PassengerId == PassengerID)
-                .Include(x => x.Flight)
-                .Where(x=> x.Flight.FlightInformation.Date < currentDate)
-                .Select(x =>
-                new PastUserFlightsVM
-                {
-                    DepartureDestination = x.Flight.To.City,
-                    ArrivalDestination = x.Flight.From.City,
-                    DateAndTime = x.Flight.FlightInformation.ToString(),
-                    BookingId = x.BookingNumber
-                })
-                .ToListAsync();
+            var UserFlights = await repo.All<Booking>()
+                 .Where(x => x.PassengerId == PassengerID)
+                 .Include(x => x.Flight)
+                 .Where(x => x.Flight.FlightInformation.Date < currentDate)
+                 .Select(x =>
+                 new PastUserFlightsVM
+                 {
+                     DepartureDestination = x.Flight.To.City,
+                     ArrivalDestination = x.Flight.From.City,
+                     DateAndTime = x.Flight.FlightInformation.ToString(),
+                     BookingId = x.BookingNumber
+                 })
+                 .ToListAsync();
 
             return UserFlights;
         }
 
-        
+
     }
 }

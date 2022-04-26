@@ -21,17 +21,25 @@ namespace AirlineReservationSystem.Core.Services
         {
             bool addedSuccessfully = false;
 
-            var flightRoute = new FlightRoute()
+            try
             {
-                City = model.City,
-                IATA = model.IATA.ToUpper(),
-            };
+                var flightRoute = new FlightRoute()
+                {
+                    City = model.City,
+                    IATA = model.IATA.ToUpper(),
+                };
 
-            await repo.AddAsync(flightRoute);
-            await repo.SaveChangesAsync();
+                await repo.AddAsync(flightRoute);
+                await repo.SaveChangesAsync();
+                addedSuccessfully = true;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
 
             return addedSuccessfully;
-
         }
 
         public async Task<IEnumerable<ListFlightRouteVM>> GetAllRoutes()
@@ -41,7 +49,7 @@ namespace AirlineReservationSystem.Core.Services
                  {
                      City = f.City,
                      Id = f.RouteId,
-                     IATA= f.IATA.ToUpper(),
+                     IATA = f.IATA.ToUpper(),
                  })
                  .ToListAsync();
         }

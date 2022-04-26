@@ -38,16 +38,23 @@ namespace AirlineReservationSystem.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> AddRoute(AddFlightRouteVM flightRouteVM)
         {
-            await service.AddFlightRoute(flightRouteVM);
+            var result = await service.AddFlightRoute(flightRouteVM);
 
-            return RedirectToAction("Home");
-
+            if (result)
+            {
+                return RedirectToAction("Home");
+            }
+            else
+            {
+                return View("CustomError");
+            }
         }
 
         [HttpPost]
         public async Task<IActionResult> RemoveRoute(string id)
         {
             var IsInUse = await service.CheckIfRouteInUse(id);
+
             if (IsInUse)
             {
                 return View("CantPerformThisAction");

@@ -20,7 +20,7 @@ namespace AirlineReservationSystem.Areas.Admin.Controllers
 
         public async Task<IActionResult> Home()
         {
-            var currentFleet = await service.GetAllAircraft();
+           var currentFleet = await service.GetAllAircraft();
 
             return View(currentFleet);
         }

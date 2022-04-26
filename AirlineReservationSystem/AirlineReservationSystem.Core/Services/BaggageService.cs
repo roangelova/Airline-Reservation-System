@@ -17,26 +17,27 @@ namespace AirlineReservationSystem.Core.Services
         }
         public async Task<bool> AddBaggageToBoooking(string BookingId, string PassengerId, AddBaggageVM model)
         {
-            var Size = Enum.GetValues<BaggageSize>().Where(x => x.Equals( model.Size)).FirstOrDefault();
             bool addedSuccessfully = false;
-
-            var baggage = new Baggage()
-            {
-                Size = Size,
-                IsReportedLost = false,
-                BookingId = BookingId,
-                PassengerId = PassengerId
-            };
 
             try
             {
-               await repo.AddAsync<Baggage>(baggage);
-               await repo.SaveChangesAsync();
+                var Size = Enum.GetValues<BaggageSize>().Where(x => x.Equals(model.Size)).FirstOrDefault();
+
+                var baggage = new Baggage()
+                {
+                    Size = Size,
+                    IsReportedLost = false,
+                    BookingId = BookingId,
+                    PassengerId = PassengerId
+                };
+
+                await repo.AddAsync<Baggage>(baggage);
+                await repo.SaveChangesAsync();
                 addedSuccessfully = true;
             }
             catch (Exception)
             {
-
+                throw;
             }
 
             return addedSuccessfully;
@@ -47,7 +48,7 @@ namespace AirlineReservationSystem.Core.Services
             var availableSizes = Enum.GetValues<BaggageSize>()
                 .Select(x => new AddBaggageVM() { Size = x.ToString() })
                 .ToArray();
-            
+
             return availableSizes;
         }
 
@@ -62,7 +63,7 @@ namespace AirlineReservationSystem.Core.Services
                     IsReportedLost = x.IsReportedLost.ToString(),
                     Size = x.Size.ToString(),
                 })
-                .ToListAsync(); 
+                .ToListAsync();
         }
 
         public async Task<bool> ReportAsLost(string BaggageId)

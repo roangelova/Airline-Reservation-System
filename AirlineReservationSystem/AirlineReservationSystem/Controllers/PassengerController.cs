@@ -80,7 +80,10 @@ namespace AirlineReservationSystem.Controllers
 
             var (registeredSuccessfully, passengerId) = await passengerService.RegisterPassenger(model);
 
-            await userService.SetPassengerId(currentUserId, passengerId);
+            if (passengerId != "")
+            {
+                await userService.SetPassengerId(currentUserId, passengerId);
+            }
 
             if (registeredSuccessfully)
             {

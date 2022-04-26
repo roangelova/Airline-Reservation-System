@@ -62,5 +62,43 @@ namespace AirlineReservationSystem.Test
             var availableAircraft = await repo.All<Aircraft>().ToListAsync();
             Assert.That(availableAircraft.Count.Equals(1));
         }
+
+        [Test]
+        public async Task ShouldReturnAllAvailableAircrafts()
+        {
+            var service = serviceProvider.GetService<IAircraftService>();
+            var repo = serviceProvider.GetService<IApplicatioDbRepository>();
+
+            await SeedDbAsync(repo);
+
+            var availableAircraft = await repo.All<Aircraft>().ToListAsync();
+            Assert.That(availableAircraft.Count.Equals(2));
+        }
+
+
+        private async Task SeedDbAsync(IApplicatioDbRepository repo)
+        {
+            var Aircraft1 = new Aircraft()
+            {
+                Capacity = 100,
+                Manufacturer = "Boeing",
+                Model = "737",
+                ImageUrl = "https://images.unsplash.com/photo-1520437358207-323b43b50729?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8YWlyY3JhZnR8ZW58MHx8MHx8&w=1000&q=80"
+            };
+
+            var Aircraft2 = new Aircraft()
+            {
+                Capacity = 150,
+                Manufacturer = "Airbus",
+                Model = "a320",
+                ImageUrl = "https://images.unsplash.com/photo-1520437358207-323b43b50729?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8YWlyY3JhZnR8ZW58MHx8MHx8&w=1000&q=80"
+            };
+
+            await repo.AddAsync(Aircraft1);
+            await repo.AddAsync(Aircraft2);
+            await repo.SaveChangesAsync();
+
+
+        }
     }
 }

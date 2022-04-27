@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using AirlineReservationSystem.Core.Contracts;
+using AirlineReservationSystem.Core.Models.AdminArea.Aircraft;
+using AirlineReservationSystem.Core.Services;
+using AirlineReservationSystem.Infrastructure.Models;
+using AirlineReservationSystem.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
-using System;
 using System.Threading.Tasks;
-using AirlineReservationSystem.Infrastructure.Repositories;
-using AirlineReservationSystem.Core.Services;
-using AirlineReservationSystem.Core.Contracts;
-using AirlineReservationSystem.Core.Models.AdminArea.Aircraft;
-using AirlineReservationSystem.Infrastructure.Models;
 
 namespace AirlineReservationSystem.Test
 {
@@ -33,8 +28,6 @@ namespace AirlineReservationSystem.Test
                 .AddSingleton<IApplicatioDbRepository, ApplicatioDbRepository>()
                 .AddSingleton<IAircraftService, AircraftService>()
                 .BuildServiceProvider();
-
-            var repo = serviceProvider.GetService<IApplicatioDbRepository>();
         }
 
         [TearDown]

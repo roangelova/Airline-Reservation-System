@@ -6,9 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace AirlineReservationSystem.Test
@@ -39,6 +37,8 @@ namespace AirlineReservationSystem.Test
             dbContext.Dispose();
         }
 
+        //TODO: Fix AddFlight and add Unit tests
+
 
         [Test]
         public async Task ShouldThrowAnExceptionIfFlightIdUnknown()
@@ -61,8 +61,7 @@ namespace AirlineReservationSystem.Test
             var FlightToCancel = repo.All<Flight>()
                 .FirstOrDefault();
 
-            FlightToCancel.FlightStatus = Infrastructure.Status.Canceled;
-            await repo.SaveChangesAsync();
+            await service.CancelFlight(FlightToCancel.FlightId);
 
             var TotalCanceledFlights = await repo.All<Flight>()
                 .Where(x => x.FlightStatus == Infrastructure.Status.Canceled)
@@ -88,8 +87,22 @@ namespace AirlineReservationSystem.Test
             var TotalAvailableFlights = await service.GetAllAvailableFlights();
 
             Assert.That(TotalAvailableFlights.ToList().Count.Equals(1));
-
         }
+
+        [Test]
+        public async Task ShouldReturnAllAvailableFlightsForCancellationAndTheNumberOfBookings()
+        {
+            var service = serviceProvider.GetService<IFlightService>();
+            var repo = serviceProvider.GetService<IApplicatioDbRepository>();
+
+            await SeedDbAsync(repo);
+
+            var TotalAvailableFlights = await service.GetFlightsForCancellation();
+
+            Assert.That(TotalAvailableFlights.ToList().Count.Equals(1));
+            Assert.That(TotalAvailableFlights.FirstOrDefault().NumberOfBookings.Equals("1"));
+        }
+
 
         private async Task SeedDbAsync(IApplicatioDbRepository repo)
         {
@@ -122,11 +135,29 @@ namespace AirlineReservationSystem.Test
                 StandardTicketPrice = 123
             };
 
+            var Passenger = new Passenger()
+            {
+                Nationality = "Bulgarian",
+                FirstName = "Roslava",
+                LastName = "Angelova",
+                DOB= DateTime.Now,
+                DocumentNumber = "1234567899"
+            };
+
+            var Booking = new Booking()
+            {
+                BookingStatus = Infrastructure.Status.Scheduled,
+                Flight = ExampleFlight,
+                Passenger = Passenger
+            };
+
             await repo.AddAsync(Airbus);
             await repo.AddAsync(Boeing);
             await repo.AddAsync(SofiaRoute);
             await repo.AddAsync(VarnaRoute);
             await repo.AddAsync(ExampleFlight);
+            await repo.AddAsync(Passenger);
+            await repo.AddAsync(Booking);
             await repo.SaveChangesAsync();
 
 

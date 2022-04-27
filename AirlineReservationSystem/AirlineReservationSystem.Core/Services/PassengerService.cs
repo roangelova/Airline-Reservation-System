@@ -21,7 +21,15 @@ namespace AirlineReservationSystem.Core.Services
             var user = await repo.All<ApplicationUser>()
                 .FirstOrDefaultAsync(x => x.Id == UserId);
 
-            return user.PassengerId;
+            if (user == null)
+            {
+                return "";
+            }
+            else
+            {
+                return user.PassengerId;
+            }
+
         }
 
         /// <summary>

@@ -28,8 +28,6 @@ namespace AirlineReservationSystem.Test
                 .AddSingleton<IApplicatioDbRepository, ApplicatioDbRepository>()
                 .AddSingleton<IFlightRouteService, FlightRouteService>()
                 .BuildServiceProvider();
-
-            var repo = serviceProvider.GetService<IApplicatioDbRepository>();
         }
 
         [TearDown]

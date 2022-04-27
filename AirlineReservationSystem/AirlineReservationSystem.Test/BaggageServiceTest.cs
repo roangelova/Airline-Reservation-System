@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace AirlineReservationSystem.Test
 {
-    public class PassengerServiceTest
+    public class BaggageServiceTest
     {
         private ServiceProvider serviceProvider;
         private InMemoryDbContext dbContext;
@@ -29,7 +29,7 @@ namespace AirlineReservationSystem.Test
             serviceProvider = serviceCollection
                 .AddSingleton(sp => dbContext.CreateContext())
                 .AddSingleton<IApplicatioDbRepository, ApplicatioDbRepository>()
-                .AddSingleton<IPassengerService, PassengerService>()
+                .AddSingleton<IBaggageService, BaggageService>()
                 .BuildServiceProvider();
         }
 
@@ -39,82 +39,30 @@ namespace AirlineReservationSystem.Test
             dbContext.Dispose();
         }
 
-        [Test]
-        public async Task ShouldRegisterAPassengerSuccessfullyAndReturnThePassengerId()
-        {
-            var model = new EditPassengerDataVM()
-            {
-                FirstName = "My Name",
-                LastName = "Last Name",
-                DateOfBirth = "10.07.1997",
-                Nationality = "Korean",
-                DocumentId = "1234567"
-            };
 
-            var service = serviceProvider.GetService<IPassengerService>();
-            (bool added, string id) = await service.RegisterPassenger(model);
-            Assert.That(id, Is.Not.EqualTo(""));
+        [Test]
+        public async Task ShouldReturnAllAvailableBaggageSizes()
+        {
+            var service = serviceProvider.GetService<IBaggageService>();
+            var repo = serviceProvider.GetService<IApplicatioDbRepository>();
+
+            var sizes = service.GetAvailableBaggageSizes().ToList();
+            Assert.That(sizes.Count.Equals(3));
+            Assert.That(sizes.First().Size == BaggageSize.Small.ToString());
         }
 
-        [Test]
-        public async Task ShouldThrowAnExceptionIfDataIsInvalid()
-        {
-            var model = new EditPassengerDataVM()
-            {
-                FirstName = "My Name",
-                LastName = "Last Name",
-                DateOfBirth = "Invalid",
-                Nationality = "Korean",
-                DocumentId = "1234567"
-            };
-
-            var service = serviceProvider.GetService<IPassengerService>();
-            var ex = Assert.CatchAsync<Exception>(
-                async () => await service.RegisterPassenger(model));
-        }
 
         [Test]
-        public async Task ShouldReturnEmptyStringIfThereIsNoPassengerIdYet()
+        public async Task ShouldAddBaggageToBookingSuccessfully()
         {
-            var service = serviceProvider.GetService<IPassengerService>();
-
-            string InvalidId = "1234456789";
-            var result = await service.GetPassengerId(InvalidId);
-            Assert.That(result.Equals(""));
-        }
-
-        [Test]
-        public async Task ShouldReturnthePassengerIdIfSuchExists()
-        {
-            var service = serviceProvider.GetService<IPassengerService>();
+            var service = serviceProvider.GetService<IBaggageService>();
             var repo = serviceProvider.GetService<IApplicatioDbRepository>();
 
             await SeedDbAsync(repo);
 
-            var user = await repo.All<ApplicationUser>().FirstOrDefaultAsync();
-            var PassengerId = await service.GetPassengerId(user.Id);
-            Assert.AreEqual(PassengerId, "12344");
-
-        }
-
-        [Test]
-        public async Task ShouldReturnAllBookingsForPassengerId()
-        {
-            var service = serviceProvider.GetService<IPassengerService>();
-            var repo = serviceProvider.GetService<IApplicatioDbRepository>();
-
-            await SeedDbAsync(repo);
-
-            var UserBookings = await service.GetUserBookings("12344");
-            Assert.That(UserBookings.ToList().Count.Equals(1));
-
-        }
-
-        private async Task SeedDbAsync(IApplicatioDbRepository repo)
-        {
             var Passenger = new Passenger()
             {
-                PassengerId= "12344",
+                PassengerId = "12344",
                 Nationality = "Bulgarian",
                 FirstName = "Test",
                 LastName = "Angelova",
@@ -122,11 +70,51 @@ namespace AirlineReservationSystem.Test
                 DocumentNumber = "1234567899"
             };
 
-            var user = new ApplicationUser()
+            var Baggage = new AddBaggageVM()
             {
-                FirstName = "My",
-                LastName = "Test",
-                Passenger = Passenger
+                Size = BaggageSize.Small.ToString(),
+            };
+
+            Assert.DoesNotThrowAsync(async () => await service.AddBaggageToBoooking("test", "12344", Baggage));
+        }
+
+        [Test]
+        public async Task ShouldReturnAllBookesBaggagesForGivenBookingAndPassengerId()
+        {
+            var service = serviceProvider.GetService<IBaggageService>();
+            var repo = serviceProvider.GetService<IApplicatioDbRepository>();
+            await SeedDbAsync(repo);
+
+            var resultWithoutBaggage = await service.GetBaggagesForBooking("test", "12344");
+            Assert.That(resultWithoutBaggage.ToList().Count.Equals(0));
+
+            var resultWithBaggage = await service.GetBaggagesForBooking("BookingWithBaggage", "12344");
+            Assert.That(resultWithBaggage.ToList().Count.Equals(1));
+        }
+
+        [Test]
+        public async Task ShouldReportExistingBaggageAsLostSuccessfully()
+        {
+            var service = serviceProvider.GetService<IBaggageService>();
+            var repo = serviceProvider.GetService<IApplicatioDbRepository>();
+            await SeedDbAsync(repo);
+
+            Assert.DoesNotThrowAsync(async () => await service.ReportAsLost("BaggageId"));
+
+            var BaggageReportedAsLost = await repo.All<Baggage>().ToListAsync();
+            Assert.That(BaggageReportedAsLost.First().IsReportedLost == true);
+        }
+
+        private async Task SeedDbAsync(IApplicatioDbRepository repo)
+        {
+            var Passenger = new Passenger()
+            {
+                PassengerId = "12344",
+                Nationality = "Bulgarian",
+                FirstName = "Test",
+                LastName = "Angelova",
+                DOB = DateTime.Now,
+                DocumentNumber = "1234567899"
             };
 
             var Airbus = new Aircraft()
@@ -152,17 +140,37 @@ namespace AirlineReservationSystem.Test
 
             var Booking = new Booking()
             {
+                BookingNumber = "test",
                 BookingStatus = Infrastructure.Status.Scheduled,
                 Flight = ExampleFlight,
                 Passenger = Passenger
             };
 
+            var BookingWithBaggage = new Booking()
+            {
+                BookingNumber = "BookingWithBaggage",
+                BookingStatus = Infrastructure.Status.Scheduled,
+                Flight = ExampleFlight,
+                Passenger = Passenger
+            };
+
+            var Baggage = new Baggage()
+            {
+                Size = BaggageSize.Medium,
+                BaggageId = "BaggageId",
+                IsReportedLost = false,
+                Passenger = Passenger,
+                Booking = BookingWithBaggage
+            };
+
             await repo.AddAsync(Passenger);
-            await repo.AddAsync(user);
             await repo.AddAsync(Airbus);
             await repo.AddAsync(SofiaRoute);
             await repo.AddAsync(VarnaRoute);
+            await repo.AddAsync(ExampleFlight);
             await repo.AddAsync(Booking);
+            await repo.AddAsync(BookingWithBaggage);
+            await repo.AddAsync(Baggage);
             await repo.SaveChangesAsync();
         }
     }

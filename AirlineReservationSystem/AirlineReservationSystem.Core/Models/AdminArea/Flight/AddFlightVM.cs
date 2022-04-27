@@ -19,7 +19,7 @@ namespace AirlineReservationSystem.Core.Models.AdminArea.Flight
         public string FlightInformation { get; set; }
 
         [Required]
-        [Range(MinTicketPrice, MaxTicketPrice, ErrorMessage ="The ptice per seat must be between {1} and {2}!")]
+        [Range(MinTicketPrice, MaxTicketPrice, ErrorMessage ="The price per seat must be between {1} and {2}!")]
         public string StandardTicketPrice{ get; set; }
         [Required]
         public string Aircraft{ get; set; }

@@ -41,7 +41,7 @@ namespace AirlineReservationSystem.Test
 
 
         [Test]
-        public async Task ShouldReturnAllAvailableBaggageSizes()
+        public void ShouldReturnAllAvailableBaggageSizes()
         {
             var service = serviceProvider.GetService<IBaggageService>();
             var repo = serviceProvider.GetService<IApplicatioDbRepository>();

@@ -15,7 +15,13 @@ The application offers the following functionalities:
   * add/remove flight route (flight manager only)
   * add/cancel flight
 
-
+-Suggested test accounts:
+ 
+ E-Mail: fleetmanagerTest@test.com
+ Password: Test123456#
+ 
+ E-Mail: flightmanagerTest@test.com
+ Password: Test123456#
   
 Current DB structure:
 ![DB](https://user-images.githubusercontent.com/88967550/164471636-d7134765-a0de-4933-aa3e-c740d5b42c3b.JPG)

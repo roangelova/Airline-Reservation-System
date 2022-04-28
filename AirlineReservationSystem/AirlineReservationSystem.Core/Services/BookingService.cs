@@ -52,7 +52,8 @@ namespace AirlineReservationSystem.Core.Services
 
             try
             {
-                await repo.DeleteAsync<Booking>(BookingId);
+                var BookingToCancel = await repo.GetByIdAsync<Booking>(BookingId);
+                BookingToCancel.BookingStatus = Infrastructure.Status.Canceled;
                 await repo.SaveChangesAsync();
                 removedSuccessfully = true;
             }

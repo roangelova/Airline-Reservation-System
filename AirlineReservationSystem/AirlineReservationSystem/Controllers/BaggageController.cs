@@ -43,6 +43,11 @@ namespace AirlineReservationSystem.Controllers
             var currentUserId = await GetUserIdAsync();
             var PassengerId = await passengerService.GetPassengerId(currentUserId);
 
+            if (PassengerId == "")
+            {
+                return View("CustomError");
+            };
+
             bool success = await baggageService.AddBaggageToBoooking(id, PassengerId, model);
 
             if(success)
@@ -60,6 +65,11 @@ namespace AirlineReservationSystem.Controllers
         {
             var currentUserId = await GetUserIdAsync();
             var PassengerId = await passengerService.GetPassengerId(currentUserId);
+
+            if (PassengerId == "")
+            {
+                return View("CustomError");
+            };
 
             var UserBaggages = await baggageService.GetBaggagesForBooking(id, PassengerId);
 

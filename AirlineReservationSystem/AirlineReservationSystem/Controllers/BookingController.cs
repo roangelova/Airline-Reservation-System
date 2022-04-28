@@ -83,6 +83,11 @@ namespace AirlineReservationSystem.Controllers
             var currentUserId = await GetUserIdAsync();
             var PassengerId = await passengerService.GetPassengerId(currentUserId);
 
+            if(PassengerId == "")
+            {
+                return View("CustomError");
+            };
+
             var pastUserFlights = await bookingService.GetPastUserFlights(PassengerId);
 
             return View(pastUserFlights);

@@ -1,5 +1,6 @@
 ﻿using AirlineReservationSystem.Core.Contracts;
 using AirlineReservationSystem.Core.Models.User_Area;
+using AirlineReservationSystem.Infrastructure;
 using AirlineReservationSystem.Infrastructure.Models;
 using AirlineReservationSystem.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -48,21 +49,21 @@ namespace AirlineReservationSystem.Core.Services
         /// </summary>
         public async Task<bool> CancelBooking(string BookingId)
         {
-            bool removedSuccessfully = false;
+            bool canceledSuccessfully = false;
 
             try
             {
                 var BookingToCancel = await repo.GetByIdAsync<Booking>(BookingId);
-                BookingToCancel.BookingStatus = Infrastructure.Status.Canceled;
+                BookingToCancel.BookingStatus = Status.Canceled;
                 await repo.SaveChangesAsync();
-                removedSuccessfully = true;
+                canceledSuccessfully = true;
             }
             catch (Exception)
             {
                 throw;
             }
 
-            return removedSuccessfully;
+            return canceledSuccessfully;
         }
 
         /// <summary>

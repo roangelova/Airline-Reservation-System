@@ -41,9 +41,12 @@ namespace AirlineReservationSystem.Core.Services
             var BaggageCount = await repo.All<Baggage>()
                 .Where(x => x.PassengerId == id).ToListAsync();
 
+            var Today = DateTime.Today;
+
             var Result = await repo.All<Booking>()
                             .Where(x => x.PassengerId == id)
                             .Include(x => x.Flight)
+                            .Where(x => x.Flight.FlightInformation.Date >= Today)
                             .Select(x => new MyBookingsVM
                             {
                                 BookingId = x.BookingNumber,
@@ -51,7 +54,8 @@ namespace AirlineReservationSystem.Core.Services
                                 ArrivalDestination = x.Flight.From.City,
                                 DateAndTime = x.Flight.FlightInformation.ToString(),
                                 FlightStatus = x.Flight.FlightStatus.ToString(),
-                                FlightId = x.Flight.FlightId
+                                FlightId = x.Flight.FlightId,
+                                BookingStatus = x.BookingStatus.ToString()
                             })
                             .ToListAsync();
 

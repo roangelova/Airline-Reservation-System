@@ -19,7 +19,8 @@
                         <th>Arrival destination</th>
                         <th>Flight Information</th>
                         <th>Baggage pieces count</th>
-                        <th>Status</th>
+                        <th>Flight Status</th>
+                        <th>Booking Status</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -41,9 +42,10 @@
                                 <td>@booking.DateAndTime</td>
                                 <td>@booking.BaggagePiecesCount</td>
                                 <td>@booking.FlightStatus</td>
+                                <td>@booking.BookingStatus</td>
 
                                 <form>
-                                    @if (booking.FlightStatus != Status.Canceled.ToString())
+                                    @if(booking.FlightStatus != Status.Canceled.ToString() && booking.BookingStatus != Status.Canceled.ToString())
                                     {
                                     <td>
                                         <button asp-controller="booking" formmethod="post" asp-action="CancelBooking" asp-route-id="@booking.BookingId" type="submit" class="btn btn-primary">Cancel booking</button>
@@ -52,7 +54,7 @@
                                     }
                                     else
                                     {
-                                    <td>You can't perform any actions on canceled flights! </td>
+                                    <td>You can't perform any actions on canceled flights and/or bookings! </td>
                                     }
                                 </form>
 

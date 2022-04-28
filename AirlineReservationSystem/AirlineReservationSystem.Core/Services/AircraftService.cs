@@ -47,6 +47,27 @@ namespace AirlineReservationSystem.Core.Services
 
         }
 
+
+        /// <summary>
+        /// Checks if there are any flight at the moment using the aircraft with the gibven Id. Used for error handling purposes.
+        /// </summary>
+        public async Task<bool> CheckIfInUse(string AircraftId)
+        {
+            var used = false;
+
+            var flights = await repo.All<Flight>()
+                .Where(f => f.FlightStatus == Infrastructure.Status.Scheduled)
+                .ToListAsync();
+
+            if (flights.Any(x => x.AircraftID == AircraftId))
+            {
+                used = true;
+                return used;
+            }
+
+            return used;
+        }
+
         /// <summary>
         /// Gets all available aircraft in the data base. Currently only used for visualization purposes in admin
         /// area
@@ -65,6 +86,53 @@ namespace AirlineReservationSystem.Core.Services
 
                 })
                 .ToListAsync();
+        }
+
+        public async Task<IEnumerable<GetAircraftDataVM>> GetAllAircraftForCancellation()
+        {
+            var flights = await repo.All<Flight>().ToListAsync();
+
+            var aircraft = await repo.All<Aircraft>()
+                .Select(a =>
+                new GetAircraftDataVM
+                {
+                    AircraftId = a.AircraftId,
+                    AircraftMakeAndModel = $"{a.Manufacturer} {a.Model}"
+                })
+                .ToListAsync();
+
+            foreach (var a in aircraft)
+            {
+                if (flights.Any(x => x.AircraftID == a.AircraftId))
+                {
+                    a.InUse = "Yes";
+                }
+                else
+                {
+                    a.InUse = "No";
+                }
+            }
+
+            return aircraft;
+        }
+
+        public async Task<bool> RemoveAircraft(string AircraftId)
+        {
+            bool removed = false;
+
+            try
+            {
+                await repo.DeleteAsync<Aircraft>(AircraftId);
+                await repo.SaveChangesAsync();
+                removed = true;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return removed;
         }
     }
 }

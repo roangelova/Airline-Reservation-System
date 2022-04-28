@@ -5,7 +5,9 @@ namespace AirlineReservationSystem.Core.Contracts
     public interface IAircraftService
     {
         Task<bool> AddAircraft(AddAircraftVM model);
-
+        Task<bool> RemoveAircraft(string AircraftId);
+        Task<bool> CheckIfInUse(string AircraftId);
         Task<IEnumerable<AddAircraftVM>> GetAllAircraft();
+        public Task<IEnumerable<GetAircraftDataVM>> GetAllAircraftForCancellation();
     }
 }

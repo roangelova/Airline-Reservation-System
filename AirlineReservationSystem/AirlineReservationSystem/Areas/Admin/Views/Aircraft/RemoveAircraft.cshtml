@@ -1,0 +1,55 @@
+﻿@using AirlineReservationSystem.Core.Models.AdminArea.Aircraft;
+
+@model IEnumerable<GetAircraftDataVM>
+@{
+    ViewData["Title"] = "Remove an Aircraft";
+}
+
+<section>
+    <div class="col-12">
+        <form>
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Pick an aircraft to cancel:</h3>
+                </div>
+
+                <div class="card-body table-responsive p-0">
+                    <table class="table table-hover text-nowrap">
+                        <thead>
+                            <tr>
+                                <th>Type</th>
+                                <th>In Use</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (!Model.Any())
+                            {
+                                <tr>
+                                    <td style="font-size:18px">There are no aircraft in the fleet yet!</td>
+                                </tr>
+
+                            }
+                            else
+                            {
+                                @foreach (var Aircraft in Model)
+                                {
+                                    <tr>
+                                        <td>@Aircraft.AircraftMakeAndModel</td>
+                                        <td>@Aircraft.InUse</td>
+                                        <td><button type="submit" formmethod="post" asp-action="RemoveAircraft" asp-controller="Aircraft" asp-route-id="@Aircraft.AircraftId" class="btn btn-primary">Remove aircraft from fleet</button></td>
+                                    </tr>
+                                }
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="card-footer">
+                    Please note that you can only remove aircraft that are currently not scheduled/in use!
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+

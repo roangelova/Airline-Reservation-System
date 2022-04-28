@@ -9,5 +9,7 @@ namespace AirlineReservationSystem.Core.Models.AdminArea.Aircraft
     public class GetAircraftDataVM
     {
         public string AircraftMakeAndModel { get; set; }
+        public string AircraftId { get; set; }
+        public string InUse { get; set; }
     }
 }

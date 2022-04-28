@@ -31,6 +31,46 @@ namespace AirlineReservationSystem.Areas.Admin.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Gets a table of Type or aircraft + Id 
+        /// </summary>
+        [HttpGet]
+        public async Task<IActionResult> RemoveAircraft()
+        {
+            var currentFleet = await service.GetAllAircraftForCancellation();
+
+            return View(currentFleet);
+
+        }
+
+
+        /// <summary>
+        /// Removes the aircraft by the given id. If the aircraft is usded in an existing (scheduled) flight,
+        /// the operation won't be allowed.
+        /// </summary>
+        [HttpPost]
+        public async Task<IActionResult> RemoveAircraft(string id)
+        {
+            bool IsInUse = await service.CheckIfInUse(id);
+
+            if (IsInUse)
+            {
+                return View("CantPerformThisAction");
+            }
+
+            bool removedSuccessfully = await service.RemoveAircraft(id);
+
+            if (removedSuccessfully)
+            {
+                return View("Success");
+            }
+            else
+            {
+                return View("CustomError");
+            }
+
+        }
+
         [HttpPost]
         public async Task<IActionResult> AddAircraft(AddAircraftVM addAircraftVM)
         {

@@ -6,6 +6,7 @@ using AirlineReservationSystem.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
+using System;
 using System.Threading.Tasks;
 
 namespace AirlineReservationSystem.Test
@@ -68,19 +69,71 @@ namespace AirlineReservationSystem.Test
             Assert.That(availableAircraft.Count.Equals(2));
         }
 
+        [Test]
+        public async Task ShouldReturnTrueIfAircraftIsInUse()
+        {
+            var service = serviceProvider.GetService<IAircraftService>();
+            var repo = serviceProvider.GetService<IApplicatioDbRepository>();
+
+            await SeedDbAsync(repo);
+
+            bool ShouldBeTrue = await service.CheckIfInUse("Used");
+
+            Assert.That(ShouldBeTrue.Equals(true));
+        }
+
+        [Test]
+        public async Task ShouldReturnFalseIfAircraftIsNotInUse()
+        {
+            var service = serviceProvider.GetService<IAircraftService>();
+            var repo = serviceProvider.GetService<IApplicatioDbRepository>();
+
+            await SeedDbAsync(repo);
+
+            bool ShouldBeFalse = await service.CheckIfInUse("NotUsed");
+
+            Assert.That(ShouldBeFalse.Equals(false));
+        }
+
 
         private async Task SeedDbAsync(IApplicatioDbRepository repo)
         {
+            var Passenger = new Passenger()
+            {
+                PassengerId = "12344",
+                Nationality = "Bulgarian",
+                FirstName = "Roslava",
+                LastName = "Angelova",
+                DOB = DateTime.Now,
+                DocumentNumber = "1234567899"
+            };
+
+            var SofiaRoute = new FlightRoute() { City = "Sofia", IATA = "SOF" };
+            var VarnaRoute = new FlightRoute() { City = "Varna", IATA = "VAR" };
+
             var Aircraft1 = new Aircraft()
             {
+                AircraftId = "Used",
                 Capacity = 100,
                 Manufacturer = "Boeing",
                 Model = "737",
                 ImageUrl = "https://images.unsplash.com/photo-1520437358207-323b43b50729?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8YWlyY3JhZnR8ZW58MHx8MHx8&w=1000&q=80"
             };
+            
+            var Flight = new Flight()
+            {
+                FlightId = "FlightId",
+                FlightStatus = Infrastructure.Status.Scheduled,
+                From = SofiaRoute,
+                To = VarnaRoute,
+                Aircraft = Aircraft1,
+                FlightInformation = DateTime.Now,
+                StandardTicketPrice = 123
+            };
 
             var Aircraft2 = new Aircraft()
             {
+                AircraftId = "NotUsed",
                 Capacity = 150,
                 Manufacturer = "Airbus",
                 Model = "a320",
@@ -89,6 +142,10 @@ namespace AirlineReservationSystem.Test
 
             await repo.AddAsync(Aircraft1);
             await repo.AddAsync(Aircraft2);
+            await repo.AddAsync(Passenger);
+            await repo.AddAsync(Flight);
+            await repo.AddAsync(SofiaRoute);
+            await repo.AddAsync(VarnaRoute);
             await repo.SaveChangesAsync();
 
 

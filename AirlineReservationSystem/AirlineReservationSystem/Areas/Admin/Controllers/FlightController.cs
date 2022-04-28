@@ -61,6 +61,11 @@ namespace AirlineReservationSystem.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> AddFlight(AddFlightVM model)
         {
+            if (model.ArrivalCity== model.DepartureCity)
+            {
+                return View("NotAllowed");
+            }
+
             var addedSuccessfuly = await flightService.AddFlight(model);
 
             if (addedSuccessfuly)

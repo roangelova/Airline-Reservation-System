@@ -52,9 +52,9 @@ namespace AirlineReservationSystem.Controllers
         public async Task<IActionResult> EditPassengerData()
         {
             var currentUserId = await GetUserIdAsync();
-            var PassengerId = passengerService.GetPassengerId(currentUserId);
+            var PassengerId = await passengerService.GetPassengerId(currentUserId);
 
-            if (PassengerId != null)
+            if (PassengerId != "")
             {
                 return View("AlreadyRegistered");
             }
@@ -66,7 +66,6 @@ namespace AirlineReservationSystem.Controllers
         {
             return View();
         }
-
 
         /// <summary>
         /// Gets the viewmodel and passes it to the service, which registeres the passenger and returns the id. This is then passed 

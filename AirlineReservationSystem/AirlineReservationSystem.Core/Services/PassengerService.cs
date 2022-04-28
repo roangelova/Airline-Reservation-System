@@ -27,6 +27,10 @@ namespace AirlineReservationSystem.Core.Services
             }
             else
             {
+                if (user.PassengerId is null)
+                {
+                    return "";
+                }
                 return user.PassengerId;
             }
 

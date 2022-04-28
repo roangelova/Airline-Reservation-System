@@ -5,48 +5,50 @@
     ViewData["Title"] = "Book a Flight";
 }
 
-<div class="col-12">
-    <form>
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-title">Available flights</h3>
+<section>
+    <div class="col-12">
+        <form>
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Available flights</h3>
+                </div>
             </div>
-        </div>
-        <div>
-            <div class="card-body table-responsive p-0">
-                <table class="table table-hover text-nowrap">
-                    <thead>
-                        <tr>
-                            <th>Departure destination</th>
-                            <th>Arrival destination</th>
-                            <th>Flight Information</th>
-                            <th>Ticket price</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if (!Model.Any())
-                        {
+            <div>
+                <div class="card-body table-responsive p-0">
+                    <table class="table table-hover text-nowrap">
+                        <thead>
                             <tr>
-                                <td style="font-size:18px">Currently there are no available flights!</td>
+                                <th>Departure destination</th>
+                                <th>Arrival destination</th>
+                                <th>Flight Information</th>
+                                <th>Ticket price</th>
                             </tr>
-                        }
-                        else
-                        {
-                            @foreach (var flight in Model)
+                        </thead>
+                        <tbody>
+                            @if (!Model.Any())
                             {
                                 <tr>
-                                    <td>@flight.DepartureDestination</td>
-                                    <td>@flight.ArrivalDestination</td>
-                                    <td>@flight.DateAndTime</td>
-                                    <td>@flight.Price</td>
-                                    <td><button type="submit" formmethod="post" asp-action="book" asp-controller="booking" asp-route-id="@flight.FlightId" class="btn btn-primary">Book</button></td>
+                                    <td style="font-size:18px">Currently there are no available flights!</td>
                                 </tr>
                             }
-                        }
-                    </tbody>
-                </table>
+                            else
+                            {
+                                @foreach (var flight in Model)
+                                {
+                                    <tr>
+                                        <td>@flight.DepartureDestination</td>
+                                        <td>@flight.ArrivalDestination</td>
+                                        <td>@flight.DateAndTime</td>
+                                        <td>@flight.Price</td>
+                                        <td><button type="submit" formmethod="post" asp-action="book" asp-controller="booking" asp-route-id="@flight.FlightId" class="btn btn-primary">Book</button></td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
-    </form>
-</div>
+        </form>
+    </div>
+</section>
 

@@ -5,50 +5,52 @@
     ViewData["Title"] = "Passenger Data";
 }
 
-<div class="col-md-6">
-    <form>
-        <div class="card card-primary">
-            <div class="card-header">
-                <h3 class="card-title">Passenger Information</h3>
-            </div>
-            <div class="card-body">
-                <div class="form-group">
-                    <label asp-for="FirstName">First Name</label>
-                    <input asp-for="FirstName" type="text" id="inputName" class="form-control" placeholder="Max">
-                    <span asp-validation-for="FirstName" class="text-danger"></span>
+<section>
+    <div class="col-md-6">
+        <form>
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Passenger Information</h3>
                 </div>
-                <div class="form-group">
-                    <label asp-for="LastName">Last Name</label>
-                    <input asp-for="LastName" type="text" id="inputName" class="form-control" placeholder="Mustermann">
-                    <span asp-validation-for="LastName" class="text-danger"></span>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label asp-for="FirstName">First Name</label>
+                        <input asp-for="FirstName" type="text" id="inputName" class="form-control" placeholder="Max">
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="LastName">Last Name</label>
+                        <input asp-for="LastName" type="text" id="inputName" class="form-control" placeholder="Mustermann">
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="DateOfBirth">Date of birth</label>
+                        <input asp-for="DateOfBirth" type="text" id="DateOfBirth" class="form-control" placeholder="01.01.2000">
+                        <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Nationality">Nationality *</label>
+                        <input asp-for="Nationality" type="text" id="Nationality" class="form-control" placeholder="German">
+                        <span asp-validation-for="Nationality" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="DocumentId">Document Id **</label>
+                        <input asp-for="DocumentId" type="text" id="DocumentId" class="form-control" placeholder="123456789">
+                        <span asp-validation-for="DocumentId" class="text-danger"></span>
+                    </div>
+                    <button type="submit" formmethod="post" class="btn btn-primary">Submit</button>
                 </div>
-                <div class="form-group">
-                    <label asp-for="DateOfBirth">Date of birth</label>
-                    <input asp-for="DateOfBirth" type="text" id="DateOfBirth" class="form-control" placeholder="01.01.2000">
-                    <span asp-validation-for="DateOfBirth" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Nationality">Nationality *</label>
-                    <input asp-for="Nationality" type="text" id="Nationality" class="form-control" placeholder="German">
-                    <span asp-validation-for="Nationality" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="DocumentId">Document Id **</label>
-                    <input asp-for="DocumentId" type="text" id="DocumentId" class="form-control" placeholder="123456789">
-                    <span asp-validation-for="DocumentId" class="text-danger"></span>
-                </div>
-                <button type="submit" formmethod="post" class="btn btn-primary">Submit</button>
-            </div>
 
+            </div>
+        </form>
+        <br />
+        <div class="alert alert-info alert-dismissible">
+            * Note that this information is needed, in order for us to make sure the below provided document Id is correct.<br />
+            ** Please make sure you provide valid information, as your document will be screened at the security desk at the airport.
         </div>
-    </form>
-    <br/>
-    <div class="alert alert-info alert-dismissible">
-        * Note that this information is needed, in order for us to make sure the below provided document Id is correct.<br />
-        ** Please make sure you provide valid information, as your document will be screened at the security desk at the airport.
     </div>
-</div>
+</section>
 
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+<partial name="_ValidationScriptsPartial" />
 }

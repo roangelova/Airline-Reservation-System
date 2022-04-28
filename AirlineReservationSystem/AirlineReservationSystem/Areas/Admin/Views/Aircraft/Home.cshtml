@@ -6,17 +6,17 @@
 }
 <section>
     <h1>Please choose an action: </h1>
-    <div style="justify-content:center">
-        <a asp-area="admin" asp-action="AddAircraft" asp-controller="aircraft" type="button" class="buttons-div" class="btn btn-block bg-gradient-secondary btn-lg">Add an Aircraft</a>
-        <a asp-area="admin" asp-action="RemoveAircraft" asp-controller="aircraft" type="button" class="buttons-div" class="btn btn-block bg-gradient-secondary btn-lg">Remove an Aircraft</a>
-    </div>
+    <ul style="justify-content:center; padding:10px; display: inline-block">
+        <li>
+            <a asp-area="admin" asp-action="AddAircraft" asp-controller="aircraft" type="button" class="buttons-div btn btn-block bg-gradient-secondary btn-lg">Add an Aircraft</a>
+        </li>
+        <li>
+            <a asp-area="admin" asp-action="RemoveAircraft" asp-controller="aircraft" type="button" class="buttons-div btn btn-block bg-gradient-secondary btn-lg">Remove an Aircraft</a>
+        </li>
+    </ul>
 </section>
-<br />
-
 <section>
-    <h1> Current aircrafts in fleet: </h1>
-    <br />
-    <br />
+    <h1 style="padding:10px"> Current aircrafts in fleet: </h1>
     <div class="aircraft-div">
         @if (!Model.Any())
         {
@@ -24,15 +24,20 @@
         }
         else
         {
-            @foreach (var aircraft in Model)
-            {
-                <div class="section">
-                    <h2 style="font-size:18px">Manufacturer: @aircraft.Manufacturer</h2>
-                    <h2 style="font-size:18px">Aircraft Model: @aircraft.AircraftModel</h2>
-                    <h2 style="font-size:18px">Capacity: @aircraft.Capacity</h2>
-                    <img class="aircraft-picture" src=@aircraft.ImageUrl><img>
-                </div>
-            }
+            <ul>
+                @foreach (var aircraft in Model)
+                {
+
+                    <li class="section" style="display:inline-block">
+                        <h2 style="font-size:18px">Manufacturer: @aircraft.Manufacturer</h2>
+                        <h2 style="font-size:18px">Aircraft Model: @aircraft.AircraftModel</h2>
+                        <h2 style="font-size:18px">Capacity: @aircraft.Capacity</h2>
+                        <img class="aircraft-picture" src=@aircraft.ImageUrl><img>
+                    </li>
+
+
+                }
+            </ul>
         }
     </div>
 </section>

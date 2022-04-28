@@ -4,8 +4,12 @@
 
 <section>
     <h1>Please choose an action: </h1>
-    <div>
-        <a asp-area="admin" asp-action="AddFlight" asp-controller="flight" class="buttons-div btn btn-block bg-gradient-secondary btn-lg">Add new flight</a>
-        <a asp-area="admin" asp-action="CancelFlight" asp-controller="flight" class="buttons-div btn btn-block bg-gradient-secondary btn-lg">Cancel flight</a>
-    </div>
+    <ul>
+        <li>
+            <a asp-area="admin" asp-action="AddFlight" asp-controller="flight" class="buttons-div btn btn-block bg-gradient-secondary btn-lg">Add new flight</a>
+        </li>
+        <li>
+            <a asp-area="admin" asp-action="CancelFlight" asp-controller="flight" class="buttons-div btn btn-block bg-gradient-secondary btn-lg">Cancel flight</a>
+        </li>
+    </ul>
 </section>

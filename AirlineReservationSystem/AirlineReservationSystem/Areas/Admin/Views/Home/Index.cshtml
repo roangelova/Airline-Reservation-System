@@ -2,15 +2,29 @@
     ViewData["Title"] = "Home Page of Area Admin";
 }
 
-<div class="text-center userDiv">
-    <h1 class="display-3">Welcome to the admin area!</h1>
-     <h3 class="display-3"> Here you can manage our airline's fleet, routes and flights.</h3>
-     <br/>
-<a class="userA" asp-area="admin" asp-action="Home" asp-controller="user"btn-lg" >User Management</a>
-<a class="userA" asp-area="admin" asp-action="Home" asp-controller="aircraft">Fleet Management</a>
-<a class="userA" asp-area="admin" asp-action="Home" asp-controller="flightroute">Flight route Management</a>
-<a class="userA" asp-area="admin" asp-action="Home" asp-controller="flight" >Flight Management</a>
-<br/>
-    <img src="/images/a350.jpg" alt="Aircraft picture" style="width:600px;" />
+<section>
+    <div class="text-center userDiv">
+        <h1 class="display-5">Welcome to the admin area!</h1>
+        <div>
+            <p class="display-3"> Here you can manage our airline's fleet, routes and flights.</p>
+        </div>
 
-</div>
+    </div>
+    <div>
+        <ul style=" text-align: center">
+            <li>
+                <a class="AdminA" asp-area="admin" asp-action="Home" asp-controller="user" btn-lg">User Management</a>
+            </li>
+            <li>
+                <a class="AdminA" asp-area="admin" asp-action="Home" asp-controller="aircraft">Fleet Management</a>
+            </li>
+            <li>
+                <a class="AdminA" asp-area="admin" asp-action="Home" asp-controller="flightroute">Flight route Management</a>
+            </li>
+            <li>
+                <a class="AdminA" asp-area="admin" asp-action="Home" asp-controller="flight">Flight Management</a>
+            </li>
+        </ul>
+        <img src="/images/a350.jpg" alt="Aircraft picture" class="AdminImg" />
+    </div>
+</section>

@@ -5,51 +5,51 @@
     ViewData["Title"] = "Archive past flights";
 }
 
-<div class="col-12">
-    <div class="card">
-        <div class="card-header">
-            <h3 class="card-title">Hier you can see all your past flights:</h3>
+<section>
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Hier you can see all your past flights:</h3>
+            </div>
         </div>
-    </div>
 
-    <div class="card-body table-responsive p-0">
-        <table class="table table-hover text-nowrap">
-            <thead>
-                <tr>
-                    <th>Departure destination</th>
-                    <th>Arrival destination</th>
-                    <th>Flight Information</th>
-                </tr>
-            </thead>
-            <tbody>
-                @if (!Model.Any())
-                {
+        <div class="card-body table-responsive p-0">
+            <table class="table table-hover text-nowrap">
+                <thead>
                     <tr>
-                        <td style="font-size:18px">You have no past flights yet!</td>
+                        <th>Departure destination</th>
+                        <th>Arrival destination</th>
+                        <th>Flight Information</th>
                     </tr>
-
-                }
-                else
-                {
-                    @foreach (var booking in Model)
+                </thead>
+                <tbody>
+                    @if (!Model.Any())
                     {
                         <tr>
-                            <td>@booking.DepartureDestination</td>
-                            <td>@booking.ArrivalDestination</td>
-                            <td>@booking.DateAndTime</td>
-                            <td>
-                                <form>
-                                    <button type="submit" formmethod="post" asp-action="GetReportLostBaggage" asp-controller="baggage" asp-route-id="@booking.BookingId" class="btn btn-primary">Report lost baggage</button>
-                                </form>
-                            </td>
+                            <td style="font-size:18px">You have no past flights yet!</td>
                         </tr>
+
                     }
-                }
+                    else
+                    {
+                        @foreach (var booking in Model)
+                        {
+                            <tr>
+                                <td>@booking.DepartureDestination</td>
+                                <td>@booking.ArrivalDestination</td>
+                                <td>@booking.DateAndTime</td>
+                                <td>
+                                    <form>
+                                        <button type="submit" formmethod="post" asp-action="GetReportLostBaggage" asp-controller="baggage" asp-route-id="@booking.BookingId" class="btn btn-primary">Report lost baggage</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    }
 
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
     </div>
-
-</div>
-</div>
-
+    </div>
+</section>

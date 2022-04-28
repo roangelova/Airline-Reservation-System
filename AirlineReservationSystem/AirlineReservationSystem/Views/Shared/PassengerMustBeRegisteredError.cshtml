@@ -2,6 +2,9 @@
     ViewData["Title"] = "Oops";
 }
 
-<h1>No passenger data registered yet! You must enter your passenger data first, before you can book and board a flight.
-    To do so, click <a asp-action="EditPassengerData" asp-controller="passenger">here!</a>
-</h1>
+<div class="alert alert-info alert-dismissible">
+    <p>
+        No passenger data registered yet! You must enter your passenger data first, before you can book and board a flight.
+        To do so, click <a asp-action="EditPassengerData" asp-controller="passenger">here!</a>
+    </p>
+</div>

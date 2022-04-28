@@ -5,69 +5,69 @@
     ViewData["Title"] = "My bookings";
 }
 
-<div class="col-12">
-    <div class="card">
-        <div class="card-header">
-            <h3 class="card-title">My flights</h3>
-        </div>
+<section>
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">My flights</h3>
+            </div>
 
-        <div class="card-body table-responsive p-0">
-            <table class="table table-hover text-nowrap">
-                <thead>
-                    <tr>
-                        <th>Departure destination</th>
-                        <th>Arrival destination</th>
-                        <th>Flight Information</th>
-                        <th>Baggage pieces count</th>
-                        <th>Flight Status</th>
-                        <th>Booking Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-
-                    @if (!Model.Any())
-                    {
+            <div class="card-body table-responsive p-0">
+                <table class="table table-hover text-nowrap">
+                    <thead>
                         <tr>
-                            <td style="font-size:18px">You have no bookings yet!</td>
+                            <th>Departure destination</th>
+                            <th>Arrival destination</th>
+                            <th>Flight Information</th>
+                            <th>Baggage pieces count</th>
+                            <th>Flight Status</th>
+                            <th>Booking Status</th>
                         </tr>
+                    </thead>
+                    <tbody>
 
-                    }
-                    else
-                    {
-                        @foreach (var booking in Model)
+                        @if (!Model.Any())
                         {
                             <tr>
-                                <td>@booking.DepartureDestination</td>
-                                <td>@booking.ArrivalDestination</td>
-                                <td>@booking.DateAndTime</td>
-                                <td>@booking.BaggagePiecesCount</td>
-                                <td>@booking.FlightStatus</td>
-                                <td>@booking.BookingStatus</td>
-
-                                <form>
-                                    @if(booking.FlightStatus != Status.Canceled.ToString() && booking.BookingStatus != Status.Canceled.ToString())
-                                    {
-                                    <td>
-                                        <button asp-controller="booking" formmethod="post" asp-action="CancelBooking" asp-route-id="@booking.BookingId" type="submit" class="btn btn-primary">Cancel booking</button>
-                                        <button asp-controller="baggage" asp-action="AddBaggage" asp-route-id="@booking.BookingId" type="submit" class="btn btn-primary">Add baggage</button>
-                                    </td>
-                                    }
-                                    else
-                                    {
-                                    <td>You can't perform any actions on canceled flights and/or bookings! </td>
-                                    }
-                                </form>
-
+                                <td style="font-size:18px">You have no bookings yet!</td>
                             </tr>
-                        }
-                    }
-                </tbody>
-            </table>
-        </div>
-        <div class="alert alert-info alert-dismissible">
-            Please note that canceling a flight is final and irrevirsible!
-        </div>
-        <div>You can view your past flights <a asp-action="GetArchivePastFlights" asp-controller="booking">here!</a> </div>
-    </div>
 
-</div>
+                        }
+                        else
+                        {
+                            @foreach (var booking in Model)
+                            {
+                                <tr>
+                                    <td>@booking.DepartureDestination</td>
+                                    <td>@booking.ArrivalDestination</td>
+                                    <td>@booking.DateAndTime</td>
+                                    <td>@booking.BaggagePiecesCount</td>
+                                    <td>@booking.FlightStatus</td>
+                                    <td>@booking.BookingStatus</td>
+
+                                    <form>
+                                        @if (booking.FlightStatus != Status.Canceled.ToString() && booking.BookingStatus != Status.Canceled.ToString())
+                                        {
+                                        <td>
+                                            <button asp-controller="booking" formmethod="post" asp-action="CancelBooking" asp-route-id="@booking.BookingId" type="submit" class="btn btn-primary">Cancel booking</button>
+                                            <button asp-controller="baggage" asp-action="AddBaggage" asp-route-id="@booking.BookingId" type="submit" class="btn btn-primary">Add baggage</button>
+                                        </td>
+                                        }
+                                        else
+                                        {
+                                        <td>You can't perform any actions on canceled flights and/or bookings! </td>
+                                        }
+                                    </form>
+
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="alert alert-info alert-dismissible">
+                Please note that canceling a flight is final and irrevirsible!
+            </div>
+            <div>You can view your past flights <a asp-action="GetArchivePastFlights" asp-controller="booking">here!</a> </div>
+        </div>
+</section>

@@ -5,49 +5,51 @@
     ViewData["Title"] = "Remove Route";
 }
 
-<div class="col-12">
-    <form>
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-title">Pick a flight route to cancel:</h3>
-            </div>
+<section>
+    <div class="col-12">
+        <form>
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Pick a flight route to cancel:</h3>
+                </div>
 
-            <div class="card-body table-responsive p-0">
-                <table class="table table-hover text-nowrap">
-                    <thead>
-                        <tr>
-                            <th>City name</th>
-                            <th>IATA code</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if (!Model.Any())
-                        {
+                <div class="card-body table-responsive p-0">
+                    <table class="table table-hover text-nowrap">
+                        <thead>
                             <tr>
-                                <td style="font-size:18px">There are no available flight routes at the moment!</td>
+                                <th>City name</th>
+                                <th>IATA code</th>
                             </tr>
-
-                        }
-                        else
-                        {
-                            @foreach (var FlightRoute in Model)
+                        </thead>
+                        <tbody>
+                            @if (!Model.Any())
                             {
                                 <tr>
-                                    <td>@FlightRoute.City</td>
-                                    <td>@FlightRoute.IATA</td>
-                                    <td><button type="submit" formmethod="post" asp-action="RemoveRoute" asp-controller="FlightRoute" asp-route-id="@FlightRoute.Id" class="btn btn-primary">Remove route from network</button></td>
+                                    <td style="font-size:18px">There are no available flight routes at the moment!</td>
                                 </tr>
+
                             }
-                        }
+                            else
+                            {
+                                @foreach (var FlightRoute in Model)
+                                {
+                                    <tr>
+                                        <td>@FlightRoute.City</td>
+                                        <td>@FlightRoute.IATA</td>
+                                        <td><button type="submit" formmethod="post" asp-action="RemoveRoute" asp-controller="FlightRoute" asp-route-id="@FlightRoute.Id" class="btn btn-primary">Remove route from network</button></td>
+                                    </tr>
+                                }
+                            }
 
-                    </tbody>
-                </table>
-            </div>
+                        </tbody>
+                    </table>
+                </div>
 
-            <div class="card-footer">
-                Please note that you can only remove routes that are currently not scheduled/in use!
+                <div class="card-footer">
+                    Please note that you can only remove routes that are currently not scheduled/in use!
+                </div>
             </div>
-        </div>
-    </form>
-</div>
+        </form>
+    </div>
+</section>
 

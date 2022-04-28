@@ -72,18 +72,16 @@ namespace AirlineReservationSystem.Core.Services
         /// Gets all available aircraft in the data base. Currently only used for visualization purposes in admin
         /// area
         /// </summary>
-        public async Task<IEnumerable<AddAircraftVM>> GetAllAircraft()
+        public async Task<IEnumerable<GetAircraftDataVM>> GetAllAircraft()
         {
             return await repo.All<Aircraft>()
                 .Select(a =>
-                new AddAircraftVM
+                new GetAircraftDataVM
                 {
-                    Manufacturer = a.Manufacturer,
-                    AircraftModel = a.Model,
+                    AircraftMakeAndModel = $"{a.Manufacturer} {a.Model}",
                     Capacity = a.Capacity.ToString(),
                     ImageUrl = a.ImageUrl,
-                    Id = a.AircraftId
-
+                    AircraftId = a.AircraftId
                 })
                 .ToListAsync();
         }

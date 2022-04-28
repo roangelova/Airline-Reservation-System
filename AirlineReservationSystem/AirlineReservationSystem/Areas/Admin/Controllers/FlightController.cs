@@ -41,8 +41,8 @@ namespace AirlineReservationSystem.Areas.Admin.Controllers
             ViewBag.AvailableAircraft = availableAircrfats
                 .Select(a => new SelectListItem()
                 {
-                    Text = $"{a.Manufacturer} {a.AircraftModel}",
-                    Value = a.Id
+                    Text = a.AircraftMakeAndModel,
+                    Value = a.AircraftId
                 })
                 .ToList();
 

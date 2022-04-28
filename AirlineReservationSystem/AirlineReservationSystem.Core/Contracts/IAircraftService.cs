@@ -7,7 +7,7 @@ namespace AirlineReservationSystem.Core.Contracts
         Task<bool> AddAircraft(AddAircraftVM model);
         Task<bool> RemoveAircraft(string AircraftId);
         Task<bool> CheckIfInUse(string AircraftId);
-        Task<IEnumerable<AddAircraftVM>> GetAllAircraft();
+        Task<IEnumerable<GetAircraftDataVM>> GetAllAircraft();
         public Task<IEnumerable<GetAircraftDataVM>> GetAllAircraftForCancellation();
     }
 }

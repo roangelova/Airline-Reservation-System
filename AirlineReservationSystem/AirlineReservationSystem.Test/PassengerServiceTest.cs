@@ -57,7 +57,7 @@ namespace AirlineReservationSystem.Test
         }
 
         [Test]
-        public async Task ShouldThrowAnExceptionIfDataIsInvalid()
+        public async Task ShouldReturnFalseAndEmptyPassengerIdIfDOBIsInvalid()
         {
             var model = new EditPassengerDataVM()
             {
@@ -69,8 +69,9 @@ namespace AirlineReservationSystem.Test
             };
 
             var service = serviceProvider.GetService<IPassengerService>();
-            var ex = Assert.CatchAsync<Exception>(
-                async () => await service.RegisterPassenger(model));
+            var (Result, PassengerId) = await service.RegisterPassenger(model);
+            Assert.AreEqual(Result, false);
+            Assert.AreEqual(PassengerId, "");
         }
 
         [Test]

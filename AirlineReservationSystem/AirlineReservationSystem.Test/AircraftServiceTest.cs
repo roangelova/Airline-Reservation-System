@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace AirlineReservationSystem.Test
@@ -95,6 +96,34 @@ namespace AirlineReservationSystem.Test
             Assert.That(ShouldBeFalse.Equals(false));
         }
 
+        [Test]
+        public async Task ShouldReturnAllAvailableAircraftForCancellation()
+        {
+            var service = serviceProvider.GetService<IAircraftService>();
+            var repo = serviceProvider.GetService<IApplicatioDbRepository>();
+
+            await SeedDbAsync(repo);
+
+           var list = await service.GetAllAircraftForCancellation();
+            var FlightInUse = list.ToList().FirstOrDefault(x => x.AircraftId == "Used");
+            Assert.AreEqual(FlightInUse.InUse, "Yes");
+            Assert.AreEqual(FlightInUse.AircraftMakeAndModel, "Boeing 737");
+        }
+
+        [Test]
+        public async Task ShouldRemoveAircraftById()
+        {
+            var service = serviceProvider.GetService<IAircraftService>();
+            var repo = serviceProvider.GetService<IApplicatioDbRepository>();
+
+            await SeedDbAsync(repo);
+
+            Assert.DoesNotThrowAsync(async () => await service.RemoveAircraft("Used"));
+
+            var AllAircraft = await repo.All<Aircraft>().ToListAsync();
+            Assert.AreEqual(AllAircraft.Count, 1);
+
+        }
 
         private async Task SeedDbAsync(IApplicatioDbRepository repo)
         {

@@ -3,6 +3,7 @@ using AirlineReservationSystem.Core.Contracts;
 using AirlineReservationSystem.Core.Models.AdminArea.Aircraft;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using System.Threading.Tasks;
 
 namespace AirlineReservationSystem.Areas.Admin.Controllers
@@ -12,17 +13,33 @@ namespace AirlineReservationSystem.Areas.Admin.Controllers
     public class AircraftController : BaseController
     {
         private readonly IAircraftService service;
+        private readonly IMemoryCache cache;
 
-        public AircraftController(IAircraftService _service)
+        public AircraftController(
+            IAircraftService _service,
+            IMemoryCache _cache)
         {
             service = _service;
+            cache = _cache;
         }
 
         public async Task<IActionResult> Home()
         {
-           var currentFleet = await service.GetAllAircraft();
+            IEnumerable<GetAircraftDataVM> CurrentFleet;
 
-            return View(currentFleet);
+            if (!this.cache.TryGetValue("CurrentFleet", out IEnumerable<GetAircraftDataVM> data))
+            {
+                data = await service.GetAllAircraft();
+
+                var cacheEntryOptions = new MemoryCacheEntryOptions()
+                    .SetSlidingExpiration(TimeSpan.FromSeconds(1000));
+
+                this.cache.Set("CurrentFleet", data, cacheEntryOptions);
+            }
+
+            CurrentFleet = data;
+
+            return View(CurrentFleet);
         }
 
         [HttpGet]
@@ -37,9 +54,22 @@ namespace AirlineReservationSystem.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> RemoveAircraft()
         {
-            var currentFleet = await service.GetAllAircraftForCancellation();
+            IEnumerable<GetAircraftDataVM> CurrentFleetForRemoval;
 
-            return View(currentFleet);
+            if (!this.cache.TryGetValue("CurrentFleetForRemoval", out IEnumerable<GetAircraftDataVM> data))
+            {
+                data = await service.GetAllAircraftForCancellation();
+
+
+                var cacheEntryOptions = new MemoryCacheEntryOptions()
+                    .SetSlidingExpiration(TimeSpan.FromSeconds(1000));
+
+                this.cache.Set("CurrentFleetForRemoval", data, cacheEntryOptions);
+            }
+
+            CurrentFleetForRemoval = data;
+
+            return View(CurrentFleetForRemoval);
 
         }
 

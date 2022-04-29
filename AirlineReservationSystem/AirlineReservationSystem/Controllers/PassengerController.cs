@@ -3,6 +3,7 @@ using AirlineReservationSystem.Core.Models.User_Area;
 using AirlineReservationSystem.Infrastructure.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace AirlineReservationSystem.Controllers
 {
@@ -11,14 +12,18 @@ namespace AirlineReservationSystem.Controllers
         private readonly IPassengerService passengerService;
         private readonly IUserService userService;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly IMemoryCache cache;
 
         public PassengerController(
-            IPassengerService _passengerService, IUserService _userService,
-           UserManager<ApplicationUser> _userManager) :base(_userManager)
+            IPassengerService _passengerService, 
+            IUserService _userService,
+           UserManager<ApplicationUser> _userManager,
+           IMemoryCache _cache) :base(_userManager, _cache)
         {
             passengerService = _passengerService;
             userService = _userService;
             userManager = _userManager;
+            cache = _cache;
         }
 
 
@@ -40,9 +45,21 @@ namespace AirlineReservationSystem.Controllers
                 return View("PassengerMustBeRegisteredError");
             };
 
-            var userBookings = await passengerService.GetUserBookings(passengerId);
+            IEnumerable<MyBookingsVM> UserBookings;
 
-            return View(userBookings);
+            if (!this.cache.TryGetValue("UserBookings", out IEnumerable<MyBookingsVM> data))
+            {
+                data = await passengerService.GetUserBookings(passengerId);
+
+                var cacheEntryOptions = new MemoryCacheEntryOptions()
+                    .SetSlidingExpiration(TimeSpan.FromSeconds(1000));
+
+                this.cache.Set("UserBookings", data, cacheEntryOptions);
+            }
+
+            UserBookings = data;
+
+            return View(UserBookings);
         }
 
         /// <summary>

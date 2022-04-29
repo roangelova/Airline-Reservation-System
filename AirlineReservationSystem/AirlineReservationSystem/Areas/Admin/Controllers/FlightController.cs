@@ -4,6 +4,7 @@ using AirlineReservationSystem.Core.Models.AdminArea.Flight;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Caching.Memory;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -17,15 +18,18 @@ namespace AirlineReservationSystem.Areas.Admin.Controllers
 
         private readonly IFlightRouteService FlightRouteService;
         private readonly IFlightService flightService;
+        private readonly IMemoryCache cache;
 
         public FlightController(
             IAircraftService _AircraftService,
             IFlightRouteService _FlightRouteService,
-            IFlightService _flightService)
+            IFlightService _flightService,
+            IMemoryCache _cache)
         {
             AircraftService = _AircraftService;
             FlightRouteService = _FlightRouteService;
             flightService = _flightService;
+            cache = _cache;
         }
 
         public IActionResult Home()
@@ -81,9 +85,21 @@ namespace AirlineReservationSystem.Areas.Admin.Controllers
 
         public async Task<IActionResult> CancelFlight()
         {
-            var flights = await flightService.GetFlightsForCancellation();
+            IEnumerable<FlightsForCancellationVM> FlightsForCancellation;
 
-            return View(flights);
+            if (!this.cache.TryGetValue("FlightsForCancellation", out IEnumerable<FlightsForCancellationVM> data))
+            {
+                data = await flightService.GetFlightsForCancellation();
+
+                var cacheEntryOptions = new MemoryCacheEntryOptions()
+                    .SetSlidingExpiration(TimeSpan.FromSeconds(1000));
+
+                this.cache.Set("FlightsForCancellation", data, cacheEntryOptions);
+            }
+
+            FlightsForCancellation = data;
+
+            return View(FlightsForCancellation);
         }
 
         [HttpPost]

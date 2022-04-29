@@ -1,7 +1,9 @@
 ﻿using AirlineReservationSystem.Core.Contracts;
+using AirlineReservationSystem.Core.Models.User_Area;
 using AirlineReservationSystem.Infrastructure.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace AirlineReservationSystem.Controllers
 {
@@ -11,25 +13,40 @@ namespace AirlineReservationSystem.Controllers
         private readonly IBookingService bookingService;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IPassengerService passengerService;
+        private readonly IMemoryCache cache;
 
         public BookingController(
             IFlightService _flightService,
             UserManager<ApplicationUser> _userManager,
             IPassengerService _passengerService,
-            IBookingService _bookingService) : base(_userManager)
-            
+            IBookingService _bookingService,
+            IMemoryCache _cache) : base(_userManager, _cache)
+
         {
             flightService = _flightService;
             userManager = _userManager;
             passengerService = _passengerService;
             bookingService = _bookingService;
-        }  
+            cache = _cache;
+        }
 
         public async Task<IActionResult> Book()
         {
-            var flights = await flightService.GetAllAvailableFlights();
+            IEnumerable<AvailableFlightsVM> AvailableFlights;
 
-            return View(flights);
+            if (!this.cache.TryGetValue("AvailableFlights", out IEnumerable<AvailableFlightsVM> flights))
+            {
+                flights = await flightService.GetAllAvailableFlights();
+
+                var cacheEntryOptions = new MemoryCacheEntryOptions()
+                    .SetSlidingExpiration(TimeSpan.FromSeconds(1000));
+
+                this.cache.Set("AvailableFlights", flights, cacheEntryOptions);
+            }
+
+            AvailableFlights = flights;
+
+            return View(AvailableFlights);
         }
 
         /// <summary>
@@ -43,7 +60,7 @@ namespace AirlineReservationSystem.Controllers
             var currentUserId = await GetUserIdAsync();
             var PassengerId = await passengerService.GetPassengerId(currentUserId);
 
-            if (PassengerId== "")
+            if (PassengerId == "")
             {
                 return View("PassengerMustBeRegisteredError");
             }
@@ -64,7 +81,7 @@ namespace AirlineReservationSystem.Controllers
         [HttpPost]
         public async Task<IActionResult> CancelBooking(string id)
         {
-           bool success =  await bookingService.CancelBooking(id);
+            bool success = await bookingService.CancelBooking(id);
 
             if (success)
             {
@@ -83,14 +100,26 @@ namespace AirlineReservationSystem.Controllers
             var currentUserId = await GetUserIdAsync();
             var PassengerId = await passengerService.GetPassengerId(currentUserId);
 
-            if(PassengerId == "")
+            if (PassengerId == "")
             {
                 return View("CustomError");
             };
 
-            var pastUserFlights = await bookingService.GetPastUserFlights(PassengerId);
+            IEnumerable<PastUserFlightsVM> PastUserFlights;
 
-            return View(pastUserFlights);
+            if (!this.cache.TryGetValue("pastUserFlights", out IEnumerable<PastUserFlightsVM> flights))
+            {
+                flights = await bookingService.GetPastUserFlights(PassengerId);
+
+                var cacheEntryOptions = new MemoryCacheEntryOptions()
+                    .SetSlidingExpiration(TimeSpan.FromSeconds(1000));
+
+                this.cache.Set("pastUserFlights", flights, cacheEntryOptions);
+            }
+
+            PastUserFlights = flights;
+
+            return View(PastUserFlights);
         }
 
     }

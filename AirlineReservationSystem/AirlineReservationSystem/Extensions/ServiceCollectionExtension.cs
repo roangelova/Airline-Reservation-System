@@ -3,6 +3,7 @@ using AirlineReservationSystem.Core.Services;
 using AirlineReservationSystem.Data;
 using AirlineReservationSystem.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

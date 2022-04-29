@@ -3,6 +3,7 @@ using AirlineReservationSystem.Core.Contracts;
 using AirlineReservationSystem.Core.Models.AdminArea.Route;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using System.Threading.Tasks;
 
 namespace AirlineReservationSystem.Areas.Admin.Controllers
@@ -11,10 +12,13 @@ namespace AirlineReservationSystem.Areas.Admin.Controllers
     public class FlightRouteController : BaseController
     {
         private readonly IFlightRouteService service;
+        private readonly IMemoryCache cache;
 
-        public FlightRouteController(IFlightRouteService _service)
+        public FlightRouteController(IFlightRouteService _service,
+            IMemoryCache _cache)
         {
             service = _service;
+            cache = _cache;
         }
         public IActionResult Home()
         {
@@ -30,9 +34,21 @@ namespace AirlineReservationSystem.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> RemoveRoute()
         {
-            var routes = await service.GetAllRoutes();
+            IEnumerable<ListFlightRouteVM> AvailableRoutes;
 
-            return View(routes);
+            if (!this.cache.TryGetValue("AvailableRoutes", out IEnumerable<ListFlightRouteVM> data))
+            {
+                data = await service.GetAllRoutes();
+
+                var cacheEntryOptions = new MemoryCacheEntryOptions()
+                    .SetSlidingExpiration(TimeSpan.FromSeconds(1000));
+
+                this.cache.Set("AvailableRoutes", data, cacheEntryOptions);
+            }
+
+            AvailableRoutes = data;
+
+            return View(AvailableRoutes);
         }
 
         [HttpPost]

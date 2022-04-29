@@ -4,6 +4,7 @@ using AirlineReservationSystem.Infrastructure.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace AirlineReservationSystem.Controllers
 {
@@ -12,15 +13,18 @@ namespace AirlineReservationSystem.Controllers
         private readonly IBaggageService baggageService;
         private readonly IPassengerService passengerService;
         UserManager<ApplicationUser> userManager;
+        private readonly IMemoryCache cache;
 
         public BaggageController(
             IBaggageService _baggageService,
             IPassengerService _passengerService,
-            UserManager<ApplicationUser> _userManager) : base(_userManager)
+            UserManager<ApplicationUser> _userManager,
+            IMemoryCache _cache) : base(_userManager, _cache)
         {
             baggageService = _baggageService;
             passengerService = _passengerService;
             userManager = _userManager;
+            cache = _cache; 
         }
         public IActionResult AddBaggage()
         {
@@ -71,7 +75,20 @@ namespace AirlineReservationSystem.Controllers
                 return View("CustomError");
             };
 
-            var UserBaggages = await baggageService.GetBaggagesForBooking(id, PassengerId);
+
+            IEnumerable<ReportLostBaggageVM> UserBaggages;
+
+            if (!this.cache.TryGetValue("UserBaggages", out IEnumerable<ReportLostBaggageVM> data))
+            {
+                data = await baggageService.GetBaggagesForBooking(id, PassengerId);
+
+                var cacheEntryOptions = new MemoryCacheEntryOptions()
+                    .SetSlidingExpiration(TimeSpan.FromSeconds(1000));
+
+                this.cache.Set("UserBaggages", data, cacheEntryOptions);
+            }
+
+            UserBaggages = data;
 
             return View("ReportLostBaggage", UserBaggages);
         }

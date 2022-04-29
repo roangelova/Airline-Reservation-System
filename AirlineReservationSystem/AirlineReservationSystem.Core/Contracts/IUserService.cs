@@ -1,4 +1,5 @@
-﻿using AirlineReservationSystem.Core.Models.Users;
+﻿using AirlineReservationSystem.Core.Models.User_Area;
+using AirlineReservationSystem.Core.Models.Users;
 using AirlineReservationSystem.Infrastructure.Models;
 
 namespace AirlineReservationSystem.Core.Contracts
@@ -10,7 +11,7 @@ namespace AirlineReservationSystem.Core.Contracts
         Task<UserEditVM> GetUserForEdit(string id);
 
         Task<bool> UpdateUser(UserEditVM model);
-        Task<bool> SetPassengerId(string userId, string PassengerId);
+        Task<bool> SetUserData(string userId, string PassengerId, EditPassengerDataVM model);
 
         Task<ApplicationUser> GetUserById(string id);
     }

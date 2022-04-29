@@ -80,7 +80,7 @@ namespace AirlineReservationSystem.Controllers
 
             if (passengerId != "")
             {
-                await userService.SetPassengerId(currentUserId, passengerId);
+                await userService.SetUserData(currentUserId, passengerId, model);
             }
 
             if (registeredSuccessfully)

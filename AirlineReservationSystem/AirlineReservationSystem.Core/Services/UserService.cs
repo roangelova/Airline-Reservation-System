@@ -1,4 +1,5 @@
 ﻿using AirlineReservationSystem.Core.Contracts;
+using AirlineReservationSystem.Core.Models.User_Area;
 using AirlineReservationSystem.Core.Models.Users;
 using AirlineReservationSystem.Infrastructure.Models;
 using AirlineReservationSystem.Infrastructure.Repositories;
@@ -53,7 +54,7 @@ namespace AirlineReservationSystem.Core.Services
         /// <summary>
         /// Once a passenger is created by the PassengerService, this method sets the Passenger Id in the User as well
         /// </summary>
-        public async Task<bool> SetPassengerId(string userId, string PassengerId)
+        public async Task<bool> SetUserData(string userId, string PassengerId, EditPassengerDataVM model)
         {
             bool addedSuccessfully = false;
             try
@@ -61,6 +62,8 @@ namespace AirlineReservationSystem.Core.Services
                 var user = await repo.GetByIdAsync<ApplicationUser>(userId);
 
                 user.PassengerId = PassengerId;
+                user.FirstName = model.FirstName;
+                user.LastName = model.LastName;
 
                 await repo.SaveChangesAsync();
 

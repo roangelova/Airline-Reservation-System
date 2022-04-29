@@ -77,11 +77,17 @@ namespace AirlineReservationSystem.Core.Services
             var addedSuccessfully = false;
             var passengerId = "";
 
+            DateTime date;
+            if (!DateTime.TryParse(model.DateOfBirth, out date))
+            {
+                return (addedSuccessfully, passengerId);
+            }
+
             try
             {
                 var passenger = new Passenger()
                 {
-                    DOB = DateTime.Parse(model.DateOfBirth),
+                    DOB = date,
                     Nationality = model.Nationality,
                     FirstName = model.FirstName,
                     LastName = model.LastName,

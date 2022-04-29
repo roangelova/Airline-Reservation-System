@@ -9,7 +9,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Hier you can view all booked baggaged for the chosen flight:</h3>
+                <h3 class="card-title">Here you can view all booked baggages for the chosen flight:</h3>
             </div>
 
             <div class="card-body table-responsive p-0">
@@ -36,7 +36,7 @@
                                     <td>@baggage.IsReportedLost</td>
                                     <td>
                                         <form>
-                                            <button type="submit" asp-action="ReportLost" asp-controller="Baggage" asp-route-id="@baggage.BaggageId" formmethod="post" class="btn btn-primary">Book</button>
+                                            <button type="submit" asp-action="ReportBaggageAsLlost" asp-controller="Baggage" asp-route-id="@baggage.BaggageId" formmethod="post" class="btn btn-primary">Book</button>
                                         </form>
 
                                     </td>
@@ -47,7 +47,7 @@
                 </table>
             </div>
             <div class="alert alert-info alert-dismissible">
-                Upon reporting a baggage piece as lost, we will review your case and getback to you within 48 hours.
+                Upon reporting a baggage piece as lost, we will review your case and get back to you within 48 hours.
             </div>
         </div>
     </div>

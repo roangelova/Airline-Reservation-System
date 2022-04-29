@@ -9,7 +9,6 @@ using System.Globalization;
 
 namespace AirlineReservationSystem.Core.Services
 {
-
     public class FlightService : IFlightService
     {
 

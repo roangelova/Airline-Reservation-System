@@ -9,7 +9,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Hier you can see all your past flights:</h3>
+                <h3 class="card-title">Here you can see all your past flights:</h3>
             </div>
         </div>
 
@@ -40,7 +40,7 @@
                                 <td>@booking.DateAndTime</td>
                                 <td>
                                     <form>
-                                        <button type="submit" formmethod="post" asp-action="GetReportLostBaggage" asp-controller="baggage" asp-route-id="@booking.BookingId" class="btn btn-primary">Report lost baggage</button>
+                                        <button type="submit" asp-action="GetReportLostBaggage" asp-controller="baggage" asp-route-id="@booking.BookingId" class="btn btn-primary">Report lost baggage</button>
                                     </form>
                                 </td>
                             </tr>

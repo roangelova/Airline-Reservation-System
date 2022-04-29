@@ -73,11 +73,11 @@ namespace AirlineReservationSystem.Controllers
 
             var UserBaggages = await baggageService.GetBaggagesForBooking(id, PassengerId);
 
-            return View(UserBaggages);
+            return View("ReportLostBaggage", UserBaggages);
         }
 
         [HttpPost]
-        public async Task<IActionResult> ReportLostBaggage(string id)
+        public async Task<IActionResult> ReportBaggageAsLlost(string id)
         {
             var result = await baggageService.ReportAsLost(id);
 

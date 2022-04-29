@@ -34,12 +34,14 @@
                                 <tr>
                                     <td>@baggage.Size</td>
                                     <td>@baggage.IsReportedLost</td>
-                                    <td>
-                                        <form>
-                                            <button type="submit" asp-action="ReportBaggageAsLlost" asp-controller="Baggage" asp-route-id="@baggage.BaggageId" formmethod="post" class="btn btn-primary">Book</button>
-                                        </form>
-
-                                    </td>
+                                    @if (baggage.IsReportedLost =="true")
+                                    {
+                                        <td>
+                                            <form>
+                                                <button type="submit" asp-action="ReportBaggageAsLlost" asp-controller="Baggage" asp-route-id="@baggage.BaggageId" formmethod="post" class="btn btn-primary">Report Lost</button>
+                                            </form>
+                                        </td>
+                                    }
                                 </tr>
                             }
                         }

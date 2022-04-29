@@ -83,7 +83,7 @@ namespace AirlineReservationSystem.Controllers
 
             if (result)
             {
-                return RedirectToAction("ReportLostBaggage");
+                return RedirectToAction("GetReportLostBaggage");
             }
             else
             {

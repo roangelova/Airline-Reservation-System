@@ -1,5 +1,7 @@
 # Airline-Reservation-System
 
+Tbc once project is graded;
+
 Soon live at https://airlinereservationsystemr.azurewebsites.net/ ; 
 
 The repository hosts an ASP.NET Core web application, which is my defence project for the ASP.NET Core course at softuni.bg.
